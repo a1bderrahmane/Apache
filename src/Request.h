@@ -9,7 +9,7 @@
 //---------- Interface de la classe <Request> (fichier Request.h) ----------------
 #if !defined(REQUEST_H)
 #define REQUEST_H
-
+#include <string>
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
@@ -48,7 +48,7 @@ public:
     // Contrat :
     //
 
-    Request();
+    Request(string &line);
     // Mode d'emploi :
     //
     // Contrat :
@@ -64,7 +64,14 @@ public:
 
 protected:
     //----------------------------------------------------- Méthodes protégées
-
+    static string IP;
+    static string Sdate;
+    static string URL;
+    static int Status;
+    static int Size;
+    static string Referer;
+    static string UserAgent;
+    
     //----------------------------------------------------- Attributs protégés
 };
 

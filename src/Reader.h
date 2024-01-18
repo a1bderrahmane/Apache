@@ -9,6 +9,8 @@
 //---------- Interface de la classe <Reader> (fichier Reader.h) ----------------
 #if !defined(READER_H)
 #define READER_H
+#include <string>
+
 
 //--------------------------------------------------- Interfaces utilisées
 
@@ -21,7 +23,6 @@
 //
 //
 //------------------------------------------------------------------------
-
 class Reader
 {
     //----------------------------------------------------------------- PUBLIC
@@ -33,7 +34,7 @@ public:
     //
     // Contrat :
     //
-
+    void ReadLine(ifstream & in);
     //------------------------------------------------- Surcharge d'opérateurs
     Reader &operator=(const Reader &unReader);
     // Mode d'emploi :
@@ -66,6 +67,7 @@ protected:
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
+    static string Line;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Reader>

@@ -13,7 +13,8 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
-
+#include <fstream>
+#include <string>
 //------------------------------------------------------ Include personnel
 #include "Reader.h"
 
@@ -34,7 +35,18 @@ Reader &Reader::operator=(const Reader &unReader)
 //
 {
 } //----- Fin de operator =
-
+void Reader::ReadLine(ifstream & logfile)
+{
+    if (logfile.is_open())
+    {
+        getline(logfile, Line);
+        
+    }
+    else
+    {
+        cout<<"Can't open file"<<endl;
+    }
+}
 //-------------------------------------------- Constructeurs - destructeur
 Reader::Reader(const Reader &unReader)
 // Algorithme :

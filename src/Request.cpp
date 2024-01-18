@@ -13,6 +13,7 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include <sstream>  
 
 //------------------------------------------------------ Include personnel
 #include "Request.h"
@@ -45,10 +46,21 @@ Request::Request(const Request &unRequest)
 #endif
 } //----- Fin de Request (constructeur de copie)
 
-Request::Request()
+Request::Request(string &line)
 // Algorithme :
 //
 {
+istringstream sflux(line);
+    sflux >> IP; 
+    sflux.ignore(256, '[');      
+    getline(sflux, Sdate, ']');
+    sflux.ignore(256, '/');
+    getline(sflux, URL, '\"');
+    sflux >> Status >> Size;
+    sflux.ignore(256, '\"');
+    getline(sflux, Referer, '\"');
+    sflux.ignore(256, '\"');
+    getline(sflux, UserAgent, '\"');
 #ifdef MAP
     cout << "Appel au constructeur de <Request>" << endl;
 #endif
