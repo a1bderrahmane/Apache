@@ -11,6 +11,8 @@
 #define READER_H
 
 //--------------------------------------------------- Interfaces utilisées
+#include <fstream>
+#include "Request.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -28,7 +30,7 @@ class Reader
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+    void Read(Request &req);
     // Mode d'emploi :
     //
     // Contrat :
@@ -48,7 +50,7 @@ public:
     // Contrat :
     //
 
-    Reader();
+    Reader(const string &path);
     // Mode d'emploi :
     //
     // Contrat :
@@ -66,6 +68,7 @@ protected:
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
+    ifstream file;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Reader>

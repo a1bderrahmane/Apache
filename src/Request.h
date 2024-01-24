@@ -27,6 +27,8 @@ class Request
     //----------------------------------------------------------------- PUBLIC
 
 public:
+    friend class Reader;
+    friend ostream &operator<<(ostream &out, const Request &r);
     //----------------------------------------------------- Méthodes publiques
     // type Méthode ( liste des paramètres );
     // Mode d'emploi :
@@ -66,6 +68,15 @@ protected:
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
+    string ip;
+    string date;
+    string heure;
+    string action;
+    string cible;
+    string status;
+    string qty;
+    string referer;
+    string idnav;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Request>

@@ -13,6 +13,8 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include <fstream>
+#include <string>
 
 //------------------------------------------------------ Include personnel
 #include "Reader.h"
@@ -22,11 +24,34 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Reader::Méthode ( liste des paramètres )
+void Reader::Read(Request &req)
 // Algorithme :
 //
-//{
-//} //----- Fin de Méthode
+{
+    getline(file, req.ip, ' ');
+    file.ignore(100, '[');
+
+    getline(file, req.date, ':');
+
+    getline(file, req.heure, ' ');
+    file.ignore(100, '"');
+
+    getline(file, req.action, ' ');
+
+    getline(file, req.cible, ' ');
+    file.ignore(100, ' ');
+
+    getline(file, req.status, ' ');
+
+    getline(file, req.qty, ' ');
+    file.ignore(100, '"');
+
+    getline(file, req.referer, '"');
+    file.ignore(100, '"');
+
+    getline(file, req.idnav, '"');
+
+} //----- Fin de Méthode
 
 //------------------------------------------------- Surcharge d'opérateurs
 Reader &Reader::operator=(const Reader &unReader)
@@ -45,13 +70,19 @@ Reader::Reader(const Reader &unReader)
 #endif
 } //----- Fin de Reader (constructeur de copie)
 
-Reader::Reader()
+Reader::Reader(const string &path)
 // Algorithme :
 //
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Reader>" << endl;
 #endif
+
+    file.open(path);
+    if ((file.rdstate() & ifstream::failbit) != 0)
+    {
+        cerr << "Erreur d’ouverture de <analog.log>" << endl;
+    }
 } //----- Fin de Reader
 
 Reader::~Reader()
@@ -61,6 +92,7 @@ Reader::~Reader()
 #ifdef MAP
     cout << "Appel au destructeur de <Reader>" << endl;
 #endif
+    file.close();
 } //----- Fin de ~Reader
 
 //------------------------------------------------------------------ PRIVE

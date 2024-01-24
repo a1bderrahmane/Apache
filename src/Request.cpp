@@ -22,11 +22,20 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Request::Méthode ( liste des paramètres )
+ostream &operator<<(ostream &out, const Request &r)
 // Algorithme :
-//
-//{
-//} //----- Fin de Méthode
+{
+    out << r.ip << "," << endl
+        << r.date << "," << endl
+        << r.heure << "," << endl
+        << r.action << "," << endl
+        << r.cible << "," << endl
+        << r.status << "," << endl
+        << r.qty << "," << endl
+        << r.referer << "," << endl
+        << r.idnav << endl;
+    return out;
+} //----- Fin de Méthode
 
 //------------------------------------------------- Surcharge d'opérateurs
 Request &Request::operator=(const Request &unRequest)
