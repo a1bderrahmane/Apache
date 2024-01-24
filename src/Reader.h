@@ -10,10 +10,19 @@
 #if !defined(READER_H)
 #define READER_H
 #include <string>
-
-
+#include <fstream>
+using namespace std;
 //--------------------------------------------------- Interfaces utilisées
-
+typedef struct Request
+{
+    string IP;
+    string Sdate;
+    string URL;
+    int Status;
+    int Size;
+    string Referer;
+    string UserAgent;
+}Request;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -34,9 +43,10 @@ public:
     //
     // Contrat :
     //
-    void ReadLine(ifstream & in);
+    void OpenFile();
+    void ReadLine(string &Line);
     //------------------------------------------------- Surcharge d'opérateurs
-    Reader &operator=(const Reader &unReader);
+    void CreateRequest(string &Line,Request& requete);
     // Mode d'emploi :
     //
     // Contrat :
@@ -49,7 +59,7 @@ public:
     // Contrat :
     //
 
-    Reader();
+    Reader(string nom);
     // Mode d'emploi :
     //
     // Contrat :
@@ -65,9 +75,11 @@ public:
 
 protected:
     //----------------------------------------------------- Méthodes protégées
-
+    string name;
+    std::ifstream logfile;
+    
     //----------------------------------------------------- Attributs protégés
-    static string Line;
+   
 };
 
 //-------------------------------- Autres définitions dépendantes de <Reader>

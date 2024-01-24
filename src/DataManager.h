@@ -9,6 +9,8 @@
 //---------- Interface de la classe <DataManager> (fichier DataManager.h) ----------------
 #if !defined(DATAMANAGER_H)
 #define DATAMANAGER_H
+#include "Reader.h"
+#include "Request.h"
 
 //--------------------------------------------------- Interfaces utilisées
 
