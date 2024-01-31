@@ -15,6 +15,7 @@ using namespace std;
 #include <iostream>
 #include <string>
 #include <map>
+#include <utility>
 //------------------------------------------------------ Include personnel
 #include "DataManager.h"
 
@@ -46,11 +47,19 @@ DataManager::DataManager(const DataManager &unDataManager)
 #endif
 } //----- Fin de DataManager (constructeur de copie)
 
-DataManager::DataManager(Reader & unReader)
+DataManager::DataManager(Reader & unReader,int time,int graph, int txtOnly)
 // Algorithme :
 //
 {
-    
+
+    pair <map<string,Node>
+    Request rqt;
+    while(unReader.createRequest(rqt))
+    {
+        
+    Node blabla
+    map[0]= blabla
+    }
 #ifdef MAP
     cout << "Appel au constructeur de <DataManager>" << endl;
 #endif

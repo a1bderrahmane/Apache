@@ -35,33 +35,33 @@ using namespace std;
 //------------------------------------------------- Surcharge d'opérateurs
 
 
-void Reader::CreateRequest(string &Line,Request& requete)
+int Reader::CreateRequest(Request& requete)
 {
-    istringstream sflux(Line);
-    sflux >> requete.IP; 
-    sflux.ignore(256, '[');      
-    getline(sflux, requete.Sdate, ']');
-    sflux.ignore(256, '/');
-    getline(sflux, requete.URL, '\"');
-    sflux >> requete.Status >> requete.Size;
-    sflux.ignore(256, '\"');
-    getline(sflux, requete.Referer, '\"');
-    sflux.ignore(256, '\"');
-    getline(sflux, requete.UserAgent, '\"');    
-}
-
-void Reader::ReadLine(string &Line)
-{
-    if (logfile.is_open())
+    string Line;
+    if (logfile)
     {
         getline(logfile, Line);
-        cout<<Line<<endl;
+        istringstream sflux(Line);
+        sflux >> requete.IP; 
+        sflux.ignore(256, '[');      
+        getline(sflux, requete.Sdate, ']');
+        sflux.ignore(256, '/');
+        getline(sflux, requete.URL, '\"');
+        sflux >> requete.Status >> requete.Size;
+        sflux.ignore(256, '\"');
+        getline(sflux, requete.Referer, '\"');
+        sflux.ignore(256, '\"');
+        getline(sflux, requete.UserAgent, '\"'); 
+        return 1;
     }
     else
     {
-        cout<<"Can't open file"<<endl;
+        return 0;
     }
+       
 }
+
+
 //-------------------------------------------- Constructeurs - destructeur
 Reader::Reader(const Reader &unReader)
 // Algorithme :

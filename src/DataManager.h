@@ -55,7 +55,7 @@ public:
     // Contrat :
     //
 
-    DataManager(Reader & unReader);
+    DataManager(Reader & unReader,int time,int graph, int txtOnly);
     // Mode d'emploi :
     //
     // Contrat :

@@ -44,14 +44,14 @@ public:
     //
     // Contrat :
     //
-
-    void ReadLine(string &Line);
-    //------------------------------------------------- Surcharge d'opérateurs
-    void CreateRequest(string &Line,Request& requete);
+   int CreateRequest(Request& requete);
     // Mode d'emploi :
     //
     // Contrat :
     //
+
+    //------------------------------------------------- Surcharge d'opérateurs
+ 
 
     //-------------------------------------------- Constructeurs - destructeur
     Reader(const Reader &unReader);
