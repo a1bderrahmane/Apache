@@ -61,7 +61,7 @@ DataManager::DataManager(Reader & unReader,int time,int graph, int txtOnly)
         n.Hits ++;
         n.Dico[rqt.Referer]=1;
         data[rqt.URL]=n;
-        cout<<data[rqt.URL]<<endl;
+        //cout<<data[rqt.URL]<<endl;
     }
     }
 #ifdef MAP
