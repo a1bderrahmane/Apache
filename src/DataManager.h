@@ -23,6 +23,7 @@ typedef struct Node
 {
     int Hits=0;
     map<string,int> Dico;
+    //ostream & operator <<
 }Node;
 //------------------------------------------------------------------------
 // Rôle de la classe <DataManager>

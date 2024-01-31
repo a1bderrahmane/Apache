@@ -54,14 +54,23 @@ DataManager::DataManager(Reader & unReader,int time,int graph, int txtOnly)
     Request rqt;
     while(unReader.CreateRequest(rqt))
     {
-    if (data.find("URL_test")!=data.end()){
-        cout<<"existe"<<endl;
+    if (data.find(rqt.URL)!=data.end()){
+        data[rqt.URL].Hits++;
+        if (data[rqt.URL].Dico.find(string(rqt.Referer)))
+        {
+            cout<<"oui"<<endl;
+            //data[rqt.URL].Dico[rqt.Referer]++;
+        }else{
+            cout<<"non"<<endl;
+
+            //data[rqt.URL].Dico[rqt.Referer]=1;
+        }
     }else {
         Node n;
         n.Hits ++;
         n.Dico[rqt.Referer]=1;
         data[rqt.URL]=n;
-        //cout<<data[rqt.URL]<<endl;
+        cout<<data[rqt.URL].Hits<<endl;
     }
     }
 #ifdef MAP
