@@ -12,6 +12,7 @@
 #include "Reader.h"
 #include "Request.h"
 #include <string>
+#include <map>
 
 //--------------------------------------------------- Interfaces utilisées
 
@@ -20,7 +21,7 @@
 //------------------------------------------------------------------ Types
 typedef struct Node
 {
-    int Hits;
+    int Hits=0;
     map<string,int> Dico;
 }Node;
 //------------------------------------------------------------------------

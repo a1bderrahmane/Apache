@@ -51,14 +51,18 @@ DataManager::DataManager(Reader & unReader,int time,int graph, int txtOnly)
 // Algorithme :
 //
 {
-
-    pair <map<string,Node>
     Request rqt;
-    while(unReader.createRequest(rqt))
+    while(unReader.CreateRequest(rqt))
     {
-        
-    Node blabla
-    map[0]= blabla
+    if (data.find("URL_test")!=data.end()){
+        cout<<"existe"<<endl;
+    }else {
+        Node n;
+        n.Hits ++;
+        n.Dico[rqt.Referer]=1;
+        data[rqt.URL]=n;
+        cout<<data[rqt.URL]<<endl;
+    }
     }
 #ifdef MAP
     cout << "Appel au constructeur de <DataManager>" << endl;
