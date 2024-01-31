@@ -1,73 +1,73 @@
-/*************************************************************************
-                           Node  -  description
-                             -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
-*************************************************************************/
+// /*************************************************************************
+//                            Node  -  description
+//                              -------------------
+//     début                : $DATE$
+//     copyright            : (C) $YEAR$ par $AUTHOR$
+//     e-mail               : $EMAIL$
+// *************************************************************************/
 
-//---------- Interface de la classe <Node> (fichier Node.h) ----------------
-#if !defined(NODE_H)
-#define NODE_H
+// //---------- Interface de la classe <Node> (fichier Node.h) ----------------
+// #if !defined(NODE_H)
+// #define NODE_H
 
-//--------------------------------------------------- Interfaces utilisées
+// //--------------------------------------------------- Interfaces utilisées
 
-//------------------------------------------------------------- Constantes
+// //------------------------------------------------------------- Constantes
 
-//------------------------------------------------------------------ Types
+// //------------------------------------------------------------------ Types
 
-//------------------------------------------------------------------------
-// Rôle de la classe <Node>
-//
-//
-//------------------------------------------------------------------------
+// //------------------------------------------------------------------------
+// // Rôle de la classe <Node>
+// //
+// //
+// //------------------------------------------------------------------------
 
-class Node
-{
-    //----------------------------------------------------------------- PUBLIC
+// class Node
+// {
+//     //----------------------------------------------------------------- PUBLIC
 
-public:
-    //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+// public:
+//     //----------------------------------------------------- Méthodes publiques
+//     // type Méthode ( liste des paramètres );
+//     // Mode d'emploi :
+//     //
+//     // Contrat :
+//     //
 
-    //------------------------------------------------- Surcharge d'opérateurs
-    Node &operator=(const Node &unNode);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+//     //------------------------------------------------- Surcharge d'opérateurs
+//     Node &operator=(const Node &unNode);
+//     // Mode d'emploi :
+//     //
+//     // Contrat :
+//     //
 
-    //-------------------------------------------- Constructeurs - destructeur
-    Node(const Node &unNode);
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+//     //-------------------------------------------- Constructeurs - destructeur
+//     Node(const Node &unNode);
+//     // Mode d'emploi (constructeur de copie) :
+//     //
+//     // Contrat :
+//     //
 
-    Node();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+//     Node();
+//     // Mode d'emploi :
+//     //
+//     // Contrat :
+//     //
 
-    virtual ~Node();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+//     virtual ~Node();
+//     // Mode d'emploi :
+//     //
+//     // Contrat :
+//     //
 
-    //------------------------------------------------------------------ PRIVE
+//     //------------------------------------------------------------------ PRIVE
 
-protected:
-    //----------------------------------------------------- Méthodes protégées
+// protected:
+//     //----------------------------------------------------- Méthodes protégées
 
-    //----------------------------------------------------- Attributs protégés
-};
+//     //----------------------------------------------------- Attributs protégés
+// };
 
-//-------------------------------- Autres définitions dépendantes de <Node>
+// //-------------------------------- Autres définitions dépendantes de <Node>
 
-#endif // NODE_H
+// #endif // NODE_H

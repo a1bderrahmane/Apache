@@ -46,10 +46,11 @@ DataManager::DataManager(const DataManager &unDataManager)
 #endif
 } //----- Fin de DataManager (constructeur de copie)
 
-DataManager::DataManager()
+DataManager::DataManager(Reader & unReader)
 // Algorithme :
 //
 {
+    
 #ifdef MAP
     cout << "Appel au constructeur de <DataManager>" << endl;
 #endif

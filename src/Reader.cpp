@@ -71,6 +71,19 @@ Reader::Reader(const Reader &unReader)
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Reader>" << endl;
 #endif
+    this->name=unReader.name;
+    this->logfile=ifstream(this->name);
+    logfile.open(this->name);
+    if (logfile.is_open()) 
+    {
+        cout << "Log file open : file.log" << endl;
+    }
+    else
+    {
+        cerr<<"couldn't open log file"<<endl;
+    }
+
+
 } //----- Fin de Reader (constructeur de copie)
 
 Reader::Reader(string nom)
@@ -79,7 +92,6 @@ Reader::Reader(string nom)
 {
     this->name=nom;
     this->logfile=ifstream(name);
-    logfile.open(name);
     if (logfile.is_open()) 
     {
         cout << "Log file open : file.log" << endl;

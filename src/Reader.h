@@ -23,6 +23,7 @@ typedef struct Request
     string Referer;
     string UserAgent;
 }Request;
+
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -43,7 +44,7 @@ public:
     //
     // Contrat :
     //
-    void OpenFile();
+
     void ReadLine(string &Line);
     //------------------------------------------------- Surcharge d'opérateurs
     void CreateRequest(string &Line,Request& requete);

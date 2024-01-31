@@ -8,19 +8,34 @@ int main()
     
     string line;
     Request requete;
-    Reader rd = Reader("/tmp/file.log");
+    Reader rd = Reader("/tmp/anonyme.log");
     
     rd.ReadLine(line);
     cout<<line<<endl;
     rd.CreateRequest(line, requete);
     
     
-    cout<<"le requete :"<<endl;
-    cout<<"IP"<<requete.IP<<endl;
-    cout<<"Sdate"<< requete.Sdate<<endl;
-    cout<<"URL"<< requete.URL<<endl;
-    cout<<"Status"<< requete.Status<<endl;
-    cout<<"Size"<< requete.Size<<endl;
+    cout<<"le requete: "<<endl;
+    cout<<"IP: "<<requete.IP<<endl;
+    cout<<"Sdate: "<< requete.Sdate<<endl;
+    cout<<"URL: "<< requete.URL<<endl;
+    cout<<"Status: "<< requete.Status<<endl;
+    cout<<"Size: "<< requete.Size<<endl;
+
+
+
+    rd.ReadLine(line);
+    cout<<line<<endl;
+    rd.CreateRequest(line, requete);
+    
+    
+    cout<<"le requete: "<<endl;
+    cout<<"IP: "<<requete.IP<<endl;
+    cout<<"Sdate: "<< requete.Sdate<<endl;
+    cout<<"URL: "<< requete.URL<<endl;
+    cout<<"Status: "<< requete.Status<<endl;
+    cout<<"Size: "<< requete.Size<<endl;
+
 
     return 0;
 }

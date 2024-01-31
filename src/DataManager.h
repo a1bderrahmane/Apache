@@ -11,13 +11,18 @@
 #define DATAMANAGER_H
 #include "Reader.h"
 #include "Request.h"
+#include <string>
 
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
-
+typedef struct Node
+{
+    int Hits;
+    map<string,int> Dico;
+}Node;
 //------------------------------------------------------------------------
 // Rôle de la classe <DataManager>
 //
@@ -50,7 +55,7 @@ public:
     // Contrat :
     //
 
-    DataManager();
+    DataManager(Reader & unReader);
     // Mode d'emploi :
     //
     // Contrat :
@@ -66,7 +71,7 @@ public:
 
 protected:
     //----------------------------------------------------- Méthodes protégées
-
+    map<string,Node> data;
     //----------------------------------------------------- Attributs protégés
 };
 
