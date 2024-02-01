@@ -2,11 +2,14 @@
 #include <iostream>
 #include <fstream>
 
+
 #include "Request.h"
 #include "Reader.h"
 #include "DataManager.h"
+#include "Graph.h"
 using namespace std;
-int main()
+
+int main(int argc, char *argv[])
 {
     
     string line;
@@ -33,7 +36,8 @@ int main()
     // cout<<"Status: "<< requete.Status<<endl;
     // cout<<"Size: "<< requete.Size<<endl;
     DataManager DM = DataManager(rd,0,0,0);
-    cout<<DM;
+    Graph graph("court.dot");
+    graph.MakeGraph(DM);
 
     return 0;
 }

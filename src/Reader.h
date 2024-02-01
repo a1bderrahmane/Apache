@@ -77,7 +77,7 @@ public:
 protected:
     //----------------------------------------------------- Méthodes protégées
     string name;
-    std::ifstream logfile;
+    ifstream logfile;
     
     //----------------------------------------------------- Attributs protégés
    

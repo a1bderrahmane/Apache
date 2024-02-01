@@ -13,6 +13,11 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include "DataManager.h"
+#include "Reader.h"
+#include<fstream>
+#include <string>
+ #include <cstdio>
 
 //------------------------------------------------------ Include personnel
 #include "Graph.h"
@@ -40,15 +45,38 @@ Graph::Graph(const Graph &unGraph)
 // Algorithme :
 //
 {
+    this->name=unGraph.name;
+    this->outputFile=ofstream(unGraph.name);
+
+    if (!outputFile.is_open()) 
+    {
+        cerr << "couldn't create or open dot file: " << name << endl;
+    }
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Graph>" << endl;
 #endif
 } //----- Fin de Graph (constructeur de copie)
 
-Graph::Graph()
+void Graph::MakeGraph(DataManager & SomeData)
+{
+    streambuf *originalCoutBuffer =cout.rdbuf(); 
+    cout.rdbuf(outputFile.rdbuf());
+    cout<<SomeData<<endl;
+    cout.rdbuf(originalCoutBuffer);
+}
+Graph::Graph(string name)
 // Algorithme :
 //
 {
+    // string filename = "court.dot";
+    this->name=name;
+    this->outputFile=ofstream(name);
+
+    if (!outputFile.is_open()) 
+    {
+        cerr << "couldn't create or open dot file: " << name << endl;
+    }
+
 #ifdef MAP
     cout << "Appel au constructeur de <Graph>" << endl;
 #endif
@@ -58,6 +86,7 @@ Graph::~Graph()
 // Algorithme :
 //
 {
+    outputFile.close();
 #ifdef MAP
     cout << "Appel au destructeur de <Graph>" << endl;
 #endif

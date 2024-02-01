@@ -78,12 +78,9 @@ DataManager::DataManager(Reader & unReader,int time,int graph, int txtOnly)
         data[rqt.URL].Hits++;
         if (data[rqt.URL].Dico.find(string(rqt.Referer))!=data[rqt.URL].Dico.end())
         {
-            cout<<"oui"<<endl;
-            //data[rqt.URL].Dico[rqt.Referer]++;
+            data[rqt.URL].Dico[rqt.Referer]++;
         }else{
-            cout<<"non"<<endl;
-
-            //data[rqt.URL].Dico[rqt.Referer]=1;
+            data[rqt.URL].Dico[rqt.Referer]=1;
         }
     }else {
         Node n;
