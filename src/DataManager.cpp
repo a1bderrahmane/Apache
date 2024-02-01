@@ -16,6 +16,7 @@ using namespace std;
 #include <string>
 #include <map>
 #include <utility>
+#include <fstream>
 //------------------------------------------------------ Include personnel
 #include "DataManager.h"
 
@@ -31,6 +32,25 @@ using namespace std;
 //} //----- Fin de Méthode
 
 //------------------------------------------------- Surcharge d'opérateurs
+ostream & operator<<(ostream & out, DataManager & SomeData)
+{
+    for(map<string, Node>::iterator t = SomeData.data.begin();t!=SomeData.data.end();t++)
+    {
+        out<<t->first <<"= {";
+        for(map<std::string, int>::iterator p = t->second.Dico.begin();p!=t->second.Dico.end();p++)
+        {
+            out<<"{"<<p->first;
+            out<<":"<< p->second<<"}";
+            if(p!=next(t->second.Dico.end(),-1))
+            {
+                out<<",";
+            }
+
+        }
+        out<<"}"<<endl;
+    }
+    return out;
+}
 DataManager &DataManager::operator=(const DataManager &unDataManager)
 // Algorithme :
 //
@@ -56,7 +76,7 @@ DataManager::DataManager(Reader & unReader,int time,int graph, int txtOnly)
     {
     if (data.find(rqt.URL)!=data.end()){
         data[rqt.URL].Hits++;
-        if (data[rqt.URL].Dico.find(string(rqt.Referer)))
+        if (data[rqt.URL].Dico.find(string(rqt.Referer))!=data[rqt.URL].Dico.end())
         {
             cout<<"oui"<<endl;
             //data[rqt.URL].Dico[rqt.Referer]++;

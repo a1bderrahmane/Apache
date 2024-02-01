@@ -11,7 +11,7 @@ int main()
     
     string line;
     Request requete;
-    Reader rd = Reader("/tmp/analogTest");
+    Reader rd = Reader("/IF3/anonym.log");
     
     rd.CreateRequest(requete);
     
@@ -33,7 +33,7 @@ int main()
     // cout<<"Status: "<< requete.Status<<endl;
     // cout<<"Size: "<< requete.Size<<endl;
     DataManager DM = DataManager(rd,0,0,0);
- 
+    cout<<DM;
 
     return 0;
 }

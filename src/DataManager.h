@@ -13,6 +13,7 @@
 #include "Request.h"
 #include <string>
 #include <map>
+#include <fstream>
 
 //--------------------------------------------------- Interfaces utilisées
 
@@ -68,7 +69,7 @@ public:
     //
     // Contrat :
     //
-
+    friend ostream & operator<<(ostream& out, DataManager & SomeData);
     //------------------------------------------------------------------ PRIVE
 
 protected:
