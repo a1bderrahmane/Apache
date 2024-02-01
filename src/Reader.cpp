@@ -40,19 +40,34 @@ int Reader::CreateRequest(Request& requete)
     string Line;
     if (logfile)
     {
+        // getline(logfile, Line);
+        // istringstream sflux(Line);
+        // sflux >> requete.IP; 
+        // sflux.ignore(256, '[');      
+        // getline(sflux, requete.Sdate, ']');
+        // sflux.ignore(256, '/');
+        // getline(sflux, requete.URL, '\"');
+        // sflux >> requete.Status >> requete.Size;
+        // sflux.ignore(256, '\"');
+        // getline(sflux, requete.Referer, '\"');
+        // sflux.ignore(256, '\"');
+        // getline(sflux, requete.UserAgent, '\"'); 
+        // return 1;
         getline(logfile, Line);
         istringstream sflux(Line);
         sflux >> requete.IP; 
         sflux.ignore(256, '[');      
         getline(sflux, requete.Sdate, ']');
         sflux.ignore(256, '/');
-        getline(sflux, requete.URL, '\"');
+        getline(sflux, requete.URL, ' ');
+        sflux.ignore(256, '"');
         sflux >> requete.Status >> requete.Size;
         sflux.ignore(256, '\"');
         getline(sflux, requete.Referer, '\"');
         sflux.ignore(256, '\"');
         getline(sflux, requete.UserAgent, '\"'); 
         return 1;
+        
     }
     else
     {
