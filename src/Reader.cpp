@@ -66,8 +66,7 @@ int Reader::CreateRequest(Request& requete)
         getline(sflux, requete.Referer, '\"');
         sflux.ignore(256, '\"');
         getline(sflux, requete.UserAgent, '\"'); 
-        return 1;
-        
+        return 1;  
     }
     else
     {

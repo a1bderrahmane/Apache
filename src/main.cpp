@@ -15,14 +15,14 @@ int main(int argc, char *argv[])
     Request requete;
     Reader rd = Reader("/tmp/test.log");
     
-    rd.CreateRequest(requete);
+    // rd.CreateRequest(requete);
     
-    cout<<"le requete: "<<endl;
-    cout<<"IP: "<<requete.IP<<endl;
-    cout<<"Sdate: "<< requete.Sdate<<endl;
-    cout<<"URL: "<< requete.URL<<endl;
-    cout<<"Status: "<< requete.Status<<endl;
-    cout<<"Size: "<< requete.Size<<endl;
+    // cout<<"le requete: "<<endl;
+    // cout<<"IP: "<<requete.IP<<endl;
+    // cout<<"Sdate: "<< requete.Sdate<<endl;
+    // cout<<"URL: "<< requete.URL<<endl;
+    // cout<<"Status: "<< requete.Status<<endl;
+    // cout<<"Size: "<< requete.Size<<endl;
 
     // rd.CreateRequest(requete);
     // cout<<"le requete: "<<endl;
@@ -31,9 +31,10 @@ int main(int argc, char *argv[])
     // cout<<"URL: "<< requete.URL<<endl;
     // cout<<"Status: "<< requete.Status<<endl;
     // cout<<"Size: "<< requete.Size<<endl;
-    DataManager DM = DataManager(rd,0,0,0);
+    DataManager DM = DataManager(rd,11,0,1);
     cout<<DM<<endl;
-    DM.top10();
+
+    //DM.top10();
     //Graph graph("court.dot");
     //graph.MakeGraph(DM);
 

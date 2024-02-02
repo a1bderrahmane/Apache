@@ -48,7 +48,7 @@ void DataManager::top10(){
     }
     for(vector<pair<string,int>>::iterator iter=top.begin();iter!=top.end();++iter)
     {
-        cout<<(*iter).first<<"("<<(*iter).second<<" hits)"<<endl;
+        cout<<iter->first<<"("<<iter->second<<" hits)"<<endl;
     }
 
 } // Fin de Méthode
@@ -78,23 +78,41 @@ DataManager::DataManager(Reader & unReader,int time,int graph, int txtOnly)
 //
 {
     Request rqt;
+    bool flag;
     while(unReader.CreateRequest(rqt))
     {
-    if (data.find(rqt.URL)!=data.end()){
-        data[rqt.URL].Hits++;
-        if (data[rqt.URL].Dico.find(string(rqt.Referer))!=data[rqt.URL].Dico.end())
+        flag=true;
+        if(rqt.Status!=200)
         {
-            data[rqt.URL].Dico[rqt.Referer]++;
-        }else{
-            data[rqt.URL].Dico[rqt.Referer]=1;
+            flag=false;
         }
-    }else {
-        Node n;
-        n.Hits ++;
-        n.Dico[rqt.Referer]=1;
-        data[rqt.URL]=n;
-        cout<<data[rqt.URL].Hits<<endl;
-    }
+        cout<<"statut ok"<<flag<<endl;
+        if(flag==true && txtOnly==1 && rqt.URL.substr(rqt.URL.length()-4, 4)!="html")
+        {
+            flag=false;
+        }
+        cout<<"html ok"<<flag<<endl;
+        if(flag ==true && time!=-1 && stoi(rqt.Sdate.substr(12,2))!=time){
+            flag=false;
+        }
+        cout<<"time ok"<<flag<<endl;
+        if(flag==true)
+        {
+            if (data.find(rqt.URL)!=data.end()){
+                data[rqt.URL].Hits++;
+                if (data[rqt.URL].Dico.find(string(rqt.Referer))!=data[rqt.URL].Dico.end())
+                {
+                    data[rqt.URL].Dico[rqt.Referer]++;
+                }else{
+                    data[rqt.URL].Dico[rqt.Referer]=1;
+                }
+            }else {
+                Node n;
+                n.Hits ++;
+                n.Dico[rqt.Referer]=1;
+                data[rqt.URL]=n;            }
+        }
+
     }
 #ifdef MAP
     cout << "Appel au constructeur de <DataManager>" << endl;
