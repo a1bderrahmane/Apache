@@ -10,14 +10,12 @@
 using namespace std;
 
 int main(int argc, char *argv[])
-{
-    
+{ 
     string line;
     Request requete;
-    Reader rd = Reader("/IF3/anonym.log");
+    Reader rd = Reader("/tmp/test.log");
     
     rd.CreateRequest(requete);
-    
     
     cout<<"le requete: "<<endl;
     cout<<"IP: "<<requete.IP<<endl;
@@ -27,8 +25,6 @@ int main(int argc, char *argv[])
     cout<<"Size: "<< requete.Size<<endl;
 
     // rd.CreateRequest(requete);
-    
-    
     // cout<<"le requete: "<<endl;
     // cout<<"IP: "<<requete.IP<<endl;
     // cout<<"Sdate: "<< requete.Sdate<<endl;
@@ -36,8 +32,10 @@ int main(int argc, char *argv[])
     // cout<<"Status: "<< requete.Status<<endl;
     // cout<<"Size: "<< requete.Size<<endl;
     DataManager DM = DataManager(rd,0,0,0);
-    Graph graph("court.dot");
-    graph.MakeGraph(DM);
+    cout<<DM<<endl;
+    DM.top10();
+    //Graph graph("court.dot");
+    //graph.MakeGraph(DM);
 
     return 0;
 }

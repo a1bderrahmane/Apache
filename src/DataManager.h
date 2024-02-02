@@ -24,7 +24,11 @@ typedef struct Node
 {
     int Hits=0;
     map<string,int> Dico;
-    //ostream & operator <<
+    ostream & operator <<(ostream & out)
+    {
+        out<<"Nombre de hits : "<<Hits<<endl;
+        //affichage de Dico à suivre
+    }
 }Node;
 //------------------------------------------------------------------------
 // Rôle de la classe <DataManager>
@@ -38,7 +42,8 @@ class DataManager
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+    //affiche le top 10 des html les plus consultés sur la console
+    void top10();
     // Mode d'emploi :
     //
     // Contrat :
@@ -64,6 +69,7 @@ public:
     // Contrat :
     //
 
+    
     virtual ~DataManager();
     // Mode d'emploi :
     //

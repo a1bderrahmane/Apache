@@ -17,6 +17,8 @@ using namespace std;
 #include <map>
 #include <utility>
 #include <fstream>
+#include <iterator>
+#include <vector>
 //------------------------------------------------------ Include personnel
 #include "DataManager.h"
 
@@ -25,36 +27,39 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type DataManager::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
+void DataManager::top10(){
+//Algorithme :
+    map<string,Node> copyData = data;
+    vector <pair<string,int>> top;
+    for(int i=0;i<10;++i)
+    {
+        int max=data.begin()->second.Hits;
+        string URLmax=data.begin()->first;
+        for(map<string,Node>::iterator it=data.begin();it!=data.end();++it)
+        {
+                if(it->second.Hits>max && it->second.Hits!=-1)
+                {
+                    max=it->second.Hits;
+                    it->second.Hits=-1;
+                    URLmax=it->first;
+                }
+        }
+        top.push_back(make_pair(URLmax,max));
+    }
+    for(vector<pair<string,int>>::iterator iter=top.begin();iter!=top.end();++iter)
+    {
+        cout<<(*iter).first<<"("<<(*iter).second<<" hits)"<<endl;
+    }
+
+} // Fin de Méthode
 
 //------------------------------------------------- Surcharge d'opérateurs
-ostream & operator<<(ostream & out, DataManager & SomeData)
-{
-    for(map<string, Node>::iterator t = SomeData.data.begin();t!=SomeData.data.end();t++)
-    {
-        out<<t->first <<"= {";
-        for(map<std::string, int>::iterator p = t->second.Dico.begin();p!=t->second.Dico.end();p++)
-        {
-            out<<"{"<<p->first;
-            out<<":"<< p->second<<"}";
-            if(p!=next(t->second.Dico.end(),-1))
-            {
-                out<<",";
-            }
 
-        }
-        out<<"}"<<endl;
-    }
-    return out;
-}
 DataManager &DataManager::operator=(const DataManager &unDataManager)
 // Algorithme :
 //
 {
+
 } //----- Fin de operator =
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -65,6 +70,7 @@ DataManager::DataManager(const DataManager &unDataManager)
 #ifdef MAP
     cout << "Appel au constructeur de copie de <DataManager>" << endl;
 #endif
+    data=unDataManager.data;
 } //----- Fin de DataManager (constructeur de copie)
 
 DataManager::DataManager(Reader & unReader,int time,int graph, int txtOnly)
@@ -104,6 +110,22 @@ DataManager::~DataManager()
 #endif
 } //----- Fin de ~DataManager
 
-//------------------------------------------------------------------ PRIVE
+ostream & operator<<(ostream & out, DataManager & SomeData)
+{
+    for(map<string, Node>::iterator t = SomeData.data.begin();t!=SomeData.data.end();t++)
+    {
+        out<<t->first <<"= {";
+        for(map<std::string, int>::iterator p = t->second.Dico.begin();p!=t->second.Dico.end();p++)
+        {
+            out<<"{"<<p->first;
+            out<<":"<< p->second<<"}";
+            if(p!=next(t->second.Dico.end(),-1))
+            {
+                out<<",";
+            }
 
-//----------------------------------------------------- Méthodes protégées
+        }
+        out<<"}"<<endl;
+    }
+    return out;
+}
