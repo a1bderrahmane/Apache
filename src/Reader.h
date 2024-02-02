@@ -7,16 +7,31 @@
 *************************************************************************/
 
 //---------- Interface de la classe <Reader> (fichier Reader.h) ----------------
+
 #if !defined(READER_H)
 #define READER_H
 
 //--------------------------------------------------- Interfaces utilisées
+using namespace std;
 #include <fstream>
+#include <sstream>
+#include <limits>
 #include "Request.h"
-
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
+typedef struct Request
+{
+    string ip;
+    string date;
+    string heure;
+    string action;
+    string URL;
+    int status;
+    int size;
+    string referer;
+    string user_agent;
+} Request;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Reader>
@@ -30,7 +45,7 @@ class Reader
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    void Read(Request &req);
+    int GetRequest(Request &req);
     // Mode d'emploi :
     //
     // Contrat :
@@ -68,9 +83,9 @@ protected:
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
-    ifstream file;
+    string path;
+    std::ifstream logfile;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Reader>
-
 #endif // READER_H

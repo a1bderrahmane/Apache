@@ -24,32 +24,34 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-void Reader::Read(Request &req)
+int Reader::GetRequest(Request &requete)
 // Algorithme :
 //
 {
-    getline(file, req.ip, ' ');
-    file.ignore(100, '[');
+    string line;
 
-    getline(file, req.date, ':');
+    if (logfile)
+    {
+        getline(logfile, line);
+        istringstream sflux(line);
+        sflux >> requete.ip;
+        sflux.ignore(numeric_limits<streamsize>::max(), '[');
+        getline(sflux, requete.date, ':');
+        getline(sflux, requete.heure, ' ');
+        sflux.ignore(numeric_limits<streamsize>::max(), '"');
+        getline(sflux, requete.action, ' ');
+        getline(sflux, requete.URL, ' ');
+        sflux.ignore(numeric_limits<streamsize>::max(), ' ');
+        sflux >> requete.status >> requete.size;
+        sflux.ignore(numeric_limits<streamsize>::max(), '\"');
+        getline(sflux, requete.referer, '\"');
+        sflux.ignore(numeric_limits<streamsize>::max(), '\"');
+        getline(sflux, requete.user_agent, '\"');
 
-    getline(file, req.heure, ' ');
-    file.ignore(100, '"');
+        return 0;
+    }
 
-    getline(file, req.action, ' ');
-
-    getline(file, req.cible, ' ');
-    file.ignore(100, ' ');
-
-    getline(file, req.status, ' ');
-
-    getline(file, req.qty, ' ');
-    file.ignore(100, '"');
-
-    getline(file, req.referer, '"');
-    file.ignore(100, '"');
-
-    getline(file, req.idnav, '"');
+    return 1;
 
 } //----- Fin de Méthode
 
@@ -78,8 +80,9 @@ Reader::Reader(const string &path)
     cout << "Appel au constructeur de <Reader>" << endl;
 #endif
 
-    file.open(path);
-    if ((file.rdstate() & ifstream::failbit) != 0)
+    this->path = path;
+    logfile.open(path);
+    if ((logfile.rdstate() & ifstream::failbit) != 0)
     {
         cerr << "Erreur d’ouverture de <analog.log>" << endl;
     }
@@ -92,7 +95,7 @@ Reader::~Reader()
 #ifdef MAP
     cout << "Appel au destructeur de <Reader>" << endl;
 #endif
-    file.close();
+    logfile.close();
 } //----- Fin de ~Reader
 
 //------------------------------------------------------------------ PRIVE
