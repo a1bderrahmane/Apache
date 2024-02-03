@@ -19,6 +19,7 @@ using namespace std;
 #include <fstream>
 #include <iterator>
 #include <vector>
+#include <algorithm>
 //------------------------------------------------------ Include personnel
 #include "DataManager.h"
 
@@ -128,22 +129,58 @@ DataManager::~DataManager()
 #endif
 } //----- Fin de ~DataManager
 
+// ostream & operator<<(ostream & out, DataManager & SomeData)
+// {
+//     for(map<string, Node>::iterator t = SomeData.data.begin();t!=SomeData.data.end();t++)
+//     {
+//         out<<t->first <<"= {";
+//         for(map<std::string, int>::iterator p = t->second.Dico.begin();p!=t->second.Dico.end();p++)
+//         {
+//             out<<"{"<<p->first;
+//             out<<":"<< p->second<<"}";
+//             if(p!=next(t->second.Dico.end(),-1))
+//             {
+//                 out<<",";
+//             }
+
+//         }
+//         out<<"}"<<endl;
+//     }
+//     return out;
+// }
+
+
 ostream & operator<<(ostream & out, DataManager & SomeData)
 {
+vector<string> tab_node;
+    out<<"{"<<endl;
     for(map<string, Node>::iterator t = SomeData.data.begin();t!=SomeData.data.end();t++)
-    {
-        out<<t->first <<"= {";
+    {  
+        vector<std::string>::iterator iter = find(tab_node.begin(), tab_node.end(), t->first);
+        if (iter == tab_node.end())
+        {
+            tab_node.push_back(t->first);
+            iter = find(tab_node.begin(), tab_node.end(), t->first);
+            int indice_ = distance(tab_node.begin(), iter);
+            out<< "node"<< indice_ << "[label :" << t->first << "]" << endl;
+        }
+        int  indice_ = distance(tab_node.begin(), iter);
+        
         for(map<std::string, int>::iterator p = t->second.Dico.begin();p!=t->second.Dico.end();p++)
         {
-            out<<"{"<<p->first;
-            out<<":"<< p->second<<"}";
-            if(p!=next(t->second.Dico.end(),-1))
+            vector<std::string>::iterator it = find(tab_node.begin(), tab_node.end(), p->first);
+            if (it == tab_node.end())
             {
-                out<<",";
+                tab_node.push_back(p->first);
+                it = find(tab_node.begin(), tab_node.end(), p->first);
+                int indice = distance(tab_node.begin(), it);
+                out<< "node"<< indice << "[label :" << p->first << "]" << endl;
             }
-
+            int indice = distance(tab_node.begin(), it);
+            out << "node" << indice << "-> node" << indice_ <<"[label : "<< p->second << "]"<< endl;
         }
-        out<<"}"<<endl;
     }
+    out<<"}"<<endl;
     return out;
 }
+   
