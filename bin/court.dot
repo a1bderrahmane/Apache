@@ -1,14 +1,27 @@
-temps/= {{http://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&ved=0CDIQFjAB&url=http%3A%2F%2Fintranet-if.insa-lyon.fr%2Ftemps%2F&ei=_wxLUKCwEMaJhQe08oCYCw&usg=AFQjCNEWrHsRdIlhli_31qYl94w-yMCjpw&sig2=eTdZgqmz8aDAi5eiWxEP1g:1}}
-temps/3IF37.html= {{http://intranet-if.insa-lyon.fr/temps/:1}}
-temps/3IF38.html= {{http://intranet-if.insa-lyon.fr/temps/3IF37.html:1}}
-temps/4IF17.html= {{http://intranet-if.insa-lyon.fr/temps/4IF16.html:1}}
-temps/4IF18.html= {{http://intranet-if.insa-lyon.fr/temps/4IF17.html:1}}
-temps/4IF19.html= {{http://intranet-if.insa-lyon.fr/temps/4IF18.html:1}}
-temps/4IF20.html= {{http://intranet-if.insa-lyon.fr/temps/4IF19.html:1}}
-temps/FondInsa.jpg= {{http://intranet-if.insa-lyon.fr/temps/style_emploi_du_temps.css:1}}
-temps/InsaIF.ico= {{-:1}}
-temps/choix.gif= {{http://intranet-if.insa-lyon.fr/temps/3IF37.html:1}}
-temps/precedent.gif= {{http://intranet-if.insa-lyon.fr/temps/3IF37.html:1}}
-temps/style_emploi_du_temps.css= {{http://intranet-if.insa-lyon.fr/temps/:1}}
-temps/suivant.gif= {{http://intranet-if.insa-lyon.fr/temps/3IF37.html:2}}
+{
+node0[label :temps/3IF37.html]
+node1[label :http://intranet-if.insa-lyon.fr/temps/]
+node1-> node0[label : 1]
+node2[label :temps/3IF38.html]
+node3[label :http://intranet-if.insa-lyon.fr/temps/3IF37.html]
+node3-> node2[label : 2]
+node4[label :temps/3IF39.html]
+node5[label :http://intranet-if.insa-lyon.fr/temps/3IF38.html]
+node5-> node4[label : 1]
+node6[label :temps/4IF16.html]
+node7[label :http://intranet-if.insa-lyon.fr/temps/4IF15.html]
+node7-> node6[label : 1]
+node8[label :temps/4IF17.html]
+node9[label :http://intranet-if.insa-lyon.fr/temps/4IF16.html]
+node9-> node8[label : 1]
+node10[label :temps/4IF18.html]
+node11[label :http://intranet-if.insa-lyon.fr/temps/4IF17.html]
+node11-> node10[label : 1]
+node12[label :temps/4IF19.html]
+node13[label :http://intranet-if.insa-lyon.fr/temps/4IF18.html]
+node13-> node12[label : 1]
+node14[label :temps/4IF20.html]
+node15[label :http://intranet-if.insa-lyon.fr/temps/4IF19.html]
+node15-> node14[label : 1]
+}
 

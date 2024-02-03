@@ -76,6 +76,7 @@ public:
     // Contrat :
     //
     friend ostream & operator<<(ostream& out, DataManager & SomeData);
+    friend void MakeDotText(DataManager & SomeData);
     //------------------------------------------------------------------ PRIVE
 
 protected:
