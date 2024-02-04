@@ -1,6 +1,21 @@
+/*************************************************************************
+                           Main  -  description
+                             -------------------
+    début                : 01/02/2024
+    copyright            : (C) 2024 par DRAVET Eléonore, BOUZIANE Abderrahmane, WIRANE Hamza, VIALLETON Rémi
+    e-mail               : eleonore.dravet@insa-lyons.fr
+                           abderrahmane.bouziane@insa-lyon.fr
+                           hamza.wirane@insa-lyon.fr
+                           remi.vialleton@insa-lyon.fr
+*************************************************************************/
+
+
+//---------------------------------------------------------------- INCLUDE
+
+//-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
-
+//------------------------------------------------------ Include personnel
 #include "DataManager.h"
 #include "Request.h"
 #include "Reader.h"

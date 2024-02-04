@@ -1,9 +1,12 @@
 /*************************************************************************
                            Graph  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : 01/02/2024
+    copyright            : (C) 2024 par DRAVET Eléonore, BOUZIANE Abderrahmane, WIRANE Hamza, VIALLETON Rémi
+    e-mail               : eleonore.dravet@insa-lyons.fr
+                           abderrahmane.bouziane@insa-lyon.fr
+                           hamza.wirane@insa-lyon.fr
+                           remi.vialleton@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la classe <Graph> (fichier Graph.h) ----------------
@@ -12,6 +15,7 @@
 #include "DataManager.h"
 #include "Reader.h"
 #include <fstream>
+#include <string>
 #include <cstdio>
 
 //--------------------------------------------------- Interfaces utilisées
@@ -29,44 +33,27 @@
 class Graph
 {
     //----------------------------------------------------------------- PUBLIC
-
 public:
     //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+    void MakeGraph(DataManager &SomeData);
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
+    //Somedata: référence d'un objet DataManager
+    // La méthode écrit dans le fichier.dot 
     //------------------------------------------------- Surcharge d'opérateurs
     Graph &operator=(const Graph &unGraph);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
     //-------------------------------------------- Constructeurs - destructeur
     Graph(const Graph &unGraph);
     // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
+    //Ouvre le fichier de même nom que celui de unGraph
+
 
     Graph(string name);
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
-    void MakeGraph(DataManager &SomeData);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    //Ouvre le fichier de nom name, s'il n'existe pas déjà , elle le crée
+
+
     virtual ~Graph();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    //Destructeur de la classe
 
     //------------------------------------------------------------------ PRIVE
 

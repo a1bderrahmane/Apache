@@ -1,9 +1,12 @@
 /*************************************************************************
                            Graph  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : 01/02/2024
+    copyright            : (C) 2024 par DRAVET Eléonore, BOUZIANE Abderrahmane, WIRANE Hamza, VIALLETON Rémi
+    e-mail               : eleonore.dravet@insa-lyons.fr
+                           abderrahmane.bouziane@insa-lyon.fr
+                           hamza.wirane@insa-lyon.fr
+                           remi.vialleton@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la classe <Graph> (fichier Graph.cpp) ------------
@@ -13,11 +16,8 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
-#include "DataManager.h"
-#include "Reader.h"
-#include <fstream>
-#include <string>
-#include <cstdio>
+
+
 
 //------------------------------------------------------ Include personnel
 #include "Graph.h"
@@ -27,12 +27,18 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Graph::Méthode ( liste des paramètres )
+void Graph::MakeGraph(DataManager &SomeData)
 // Algorithme :
-//
-//{
-//} //----- Fin de Méthode
-
+//On utilise la méthode ami de la classe DataManager MakeDotText pour faire l'affichage dans le fichier.dot
+{
+    // Redirection du stream buffer associé à l’objet cout sur le stream buffer associé à OutputFile
+    // en conservant l’adresse de l’ancien stream buffer de cout
+    streambuf *originalCoutBuffer = cout.rdbuf();
+    cout.rdbuf(outputFile.rdbuf());
+    MakeDotText(SomeData);
+    // Restauration du stream buffer par défaut pour cout
+    cout.rdbuf(originalCoutBuffer);
+}
 //------------------------------------------------- Surcharge d'opérateurs
 Graph &Graph::operator=(const Graph &unGraph)
 // Algorithme :
@@ -42,39 +48,28 @@ Graph &Graph::operator=(const Graph &unGraph)
 
 //-------------------------------------------- Constructeurs - destructeur
 Graph::Graph(const Graph &unGraph)
-// Algorithme :
-//
 {
     this->name = unGraph.name;
     this->outputFile = ofstream(unGraph.name);
 
     if (!outputFile.is_open())
     {
-        cerr << "couldn't create or open dot file: " << name << endl;
+        cerr << "Erreur d'ouverture de <" << unGraph.name <<">"<< endl;
     }
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Graph>" << endl;
 #endif
 } //----- Fin de Graph (constructeur de copie)
 
-void Graph::MakeGraph(DataManager &SomeData)
-{
-    streambuf *originalCoutBuffer = cout.rdbuf();
-    cout.rdbuf(outputFile.rdbuf());
-    MakeDotText(SomeData);
-    cout.rdbuf(originalCoutBuffer);
-}
+
 Graph::Graph(string name)
-// Algorithme :
-//
 {
-    // string filename = "court.dot";
     this->name = name;
     this->outputFile = ofstream(name);
 
     if (!outputFile.is_open())
     {
-        cerr << "couldn't create or open dot file: " << name << endl;
+        cerr << "Erreur d'ouverture de <" << name <<">"<< endl;
     }
 
 #ifdef MAP
@@ -84,7 +79,6 @@ Graph::Graph(string name)
 
 Graph::~Graph()
 // Algorithme :
-//
 {
     outputFile.close();
 #ifdef MAP

@@ -1,9 +1,12 @@
 /*************************************************************************
                            Reader  -  description
                              -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
+    début                : 01/02/2024
+    copyright            : (C) 2024 par DRAVET Eléonore, BOUZIANE Abderrahmane, WIRANE Hamza, VIALLETON Rémi
+    e-mail               : eleonore.dravet@insa-lyons.fr
+                           abderrahmane.bouziane@insa-lyon.fr
+                           hamza.wirane@insa-lyon.fr
+                           remi.vialleton@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la classe <Reader> (fichier Reader.h) ----------------
@@ -47,9 +50,10 @@ public:
     //----------------------------------------------------- Méthodes publiques
     int GetRequest(Request &req);
     // Mode d'emploi :
-    //
+    //req:Objet de Request passé en référence
+
     // Contrat :
-    //
+    //La ligne lu par GetRequest doit être bien formulée et respect la syntaxe conventionelle
 
     //------------------------------------------------- Surcharge d'opérateurs
     Reader &operator=(const Reader &unReader);
@@ -67,15 +71,15 @@ public:
 
     Reader(const string &path);
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    //path: référence de l'adresse de <analog.log>
+    // La méthode essaie d'ouvrir le fichier à l'adresse donnée
+    // S'il n'arrrive pas , la méthode renvoie un message d'erreur
+    
 
     virtual ~Reader();
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    //Ferme le fichier ouvert auparavant
+
 
     //------------------------------------------------------------------ PRIVE
 
