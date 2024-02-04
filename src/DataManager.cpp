@@ -60,7 +60,7 @@ void DataManager::top10()
     //Afficher les 10 premières entrées
     for (vector<pair<string, int>>::iterator iter = top.begin(); iter != top.end(); ++iter)
     {
-        cout << (*iter).first << "(" << (*iter).second << " hits)" << endl;
+        cout << iter->first << "(" << iter->second << " hits)" << endl;
     }
 
 } // Fin de Méthode
