@@ -9,7 +9,6 @@
                            remi.vialleton@insa-lyon.fr
 *************************************************************************/
 
-
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
@@ -36,7 +35,7 @@ int main(int argc, char *argv[])
        cout << "Status: " << requete.status << endl;
        cout << "Size: " << requete.size << endl;
        cout << "Referer: " << requete.referer << endl;
-       cout << "User_agent: " << requete.user_agent << endl; 
+       cout << "User_agent: " << requete.user_agent << endl;
     */
 
     int time = -1;
@@ -68,14 +67,19 @@ int main(int argc, char *argv[])
         }
     }
     string path = argv[argc - 1];
+    if (path.substr(path.size() - 4, 4) != ".log")
+    {
+        cerr << "Format du fichier invalide, veuillez entrer un fichier .log" << endl;
+        exit(1);
+    }
     cout << "path : " << path << endl;
     DataManager dm(path, time, graph, htmlOnly);
     dm.top10();
     if (graph.empty() == false)
     {
-        Graph (graph).MakeGraph(dm);
+        Graph(graph).MakeGraph(dm);
     }
-    cout << dm;
+    /* cout << dm; */
     /* string a = "a";
     string b = "b";
     string c = "c";
@@ -83,7 +87,7 @@ int main(int argc, char *argv[])
     Node n(a, b);
     n.MAJ(c);
     n.MAJ(c);
-    cout << n << endl; 
+    cout << n << endl;
 
     for (int i = 0; i < argc; i++)
     {
@@ -94,5 +98,5 @@ int main(int argc, char *argv[])
     }
     DataManager d("/tmp/analog.log");
     */
-    return 0; 
+    return 0;
 }
