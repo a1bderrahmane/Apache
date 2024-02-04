@@ -15,7 +15,6 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include "Reader.h"
-#include "Node.h"
 #include <iterator>
 #include <map>
 #include <vector>

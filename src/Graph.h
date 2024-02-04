@@ -12,8 +12,8 @@
 //---------- Interface de la classe <Graph> (fichier Graph.h) ----------------
 #if !defined(GRAPH_H)
 #define GRAPH_H
-#include "DataManager.h"
 #include "Reader.h"
+#include "DataManager.h"
 #include <fstream>
 #include <string>
 #include <cstdio>

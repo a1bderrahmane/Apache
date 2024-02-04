@@ -19,7 +19,6 @@ using namespace std;
 #include <fstream>
 #include <sstream>
 #include <limits>
-#include "Request.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
