@@ -9,6 +9,10 @@
 //---------- Interface de la classe <Graph> (fichier Graph.h) ----------------
 #if !defined(GRAPH_H)
 #define GRAPH_H
+#include "DataManager.h"
+#include "Reader.h"
+#include <fstream>
+#include <cstdio>
 
 //--------------------------------------------------- Interfaces utilisées
 
@@ -48,12 +52,12 @@ public:
     // Contrat :
     //
 
-    Graph();
+    Graph(string name);
     // Mode d'emploi :
     //
     // Contrat :
     //
-
+    void MakeGraph(DataManager &SomeData);
     virtual ~Graph();
     // Mode d'emploi :
     //
@@ -66,6 +70,8 @@ protected:
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
+    string name;
+    ofstream outputFile;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Graph>

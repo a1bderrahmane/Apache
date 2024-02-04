@@ -7,6 +7,7 @@
 *************************************************************************/
 
 //---------- Interface de la classe <Request> (fichier Request.h) ----------------
+/*
 #if !defined(REQUEST_H)
 #define REQUEST_H
 
@@ -27,6 +28,10 @@ class Request
     //----------------------------------------------------------------- PUBLIC
 
 public:
+    friend class Reader;
+    friend class DataManager;
+    friend ostream &operator<<(ostream &out, const Request &r);
+
     //----------------------------------------------------- Méthodes publiques
     // type Méthode ( liste des paramètres );
     // Mode d'emploi :
@@ -66,8 +71,18 @@ protected:
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
+    string ip;
+    string date;
+    string heure;
+    string action;
+    string cible;
+    string status;
+    string qty;
+    string referer;
+    string idnav;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Request>
 
 #endif // REQUEST_H
+*/

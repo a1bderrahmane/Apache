@@ -13,6 +13,8 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include <fstream>
+#include <string>
 
 //------------------------------------------------------ Include personnel
 #include "Reader.h"
@@ -22,11 +24,36 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type Reader::Méthode ( liste des paramètres )
+int Reader::GetRequest(Request &requete)
 // Algorithme :
 //
-//{
-//} //----- Fin de Méthode
+{
+    string line;
+
+    if (logfile)
+    {
+        getline(logfile, line);
+        istringstream sflux(line);
+        sflux >> requete.ip;
+        sflux.ignore(numeric_limits<streamsize>::max(), '[');
+        getline(sflux, requete.date, ':');
+        getline(sflux, requete.heure, ' ');
+        sflux.ignore(numeric_limits<streamsize>::max(), '"');
+        getline(sflux, requete.action, ' ');
+        getline(sflux, requete.URL, ' ');
+        sflux.ignore(numeric_limits<streamsize>::max(), ' ');
+        sflux >> requete.status >> requete.size;
+        sflux.ignore(numeric_limits<streamsize>::max(), '\"');
+        getline(sflux, requete.referer, '\"');
+        sflux.ignore(numeric_limits<streamsize>::max(), '\"');
+        getline(sflux, requete.user_agent, '\"');
+
+        return 0;
+    }
+
+    return 1;
+
+} //----- Fin de Méthode
 
 //------------------------------------------------- Surcharge d'opérateurs
 Reader &Reader::operator=(const Reader &unReader)
@@ -45,13 +72,20 @@ Reader::Reader(const Reader &unReader)
 #endif
 } //----- Fin de Reader (constructeur de copie)
 
-Reader::Reader()
+Reader::Reader(const string &path)
 // Algorithme :
 //
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Reader>" << endl;
 #endif
+
+    this->path = path;
+    logfile.open(path);
+    if ((logfile.rdstate() & ifstream::failbit) != 0)
+    {
+        cerr << "Erreur d’ouverture de <analog.log>" << endl;
+    }
 } //----- Fin de Reader
 
 Reader::~Reader()
@@ -61,6 +95,7 @@ Reader::~Reader()
 #ifdef MAP
     cout << "Appel au destructeur de <Reader>" << endl;
 #endif
+    logfile.close();
 } //----- Fin de ~Reader
 
 //------------------------------------------------------------------ PRIVE

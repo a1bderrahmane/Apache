@@ -2,7 +2,7 @@ ECHO = @echo
 GCC = g++
 RM = @rm -f
 CCFLAGS = -c -g -O1 -ansi -pedantic -Wall -std=c++11 
-MAP = -DMAP #Commenter cette ligne si on veut compiler sans le mode Mise Au Point
+MAP = #-DMAP #Commenter cette ligne si on veut compiler sans le mode Mise Au Point
 BIN = ../bin
 EXE = analog
 OBJETS = $(SRC:.cpp=.o)
