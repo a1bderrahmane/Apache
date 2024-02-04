@@ -147,29 +147,33 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
                  << time << endl;
         }
 
-        if (data.find(req.URL) != data.end())
+        if (flag == true)
         {
-            data[req.URL].hit++;
-            if (graph.empty() == false)
+            cout << referer << endl;
+            if (data.find(req.URL) != data.end())
             {
-                if (data[req.URL].dico.find(string(referer)) != data[req.URL].dico.end())
+                data[req.URL].hit++;
+                if (graph.empty() == false)
                 {
-                    data[req.URL].dico[referer]++;
-                }
-                else
-                {
-                    data[req.URL].dico[referer] = 1;
+                    if (data[req.URL].dico.find(string(referer)) != data[req.URL].dico.end())
+                    {
+                        data[req.URL].dico[referer]++;
+                    }
+                    else
+                    {
+                        data[req.URL].dico[referer] = 1;
+                    }
                 }
             }
-        }
-        else
-        {
-            Node n;
-            n.hit++;
-            if (graph.empty() == false)
+            else
             {
-                n.dico[referer] = 1;
-                data[req.URL] = n;
+                Node n;
+                n.hit++;
+                if (graph.empty() == false)
+                {
+                    n.dico[referer] = 1;
+                    data[req.URL] = n;
+                }
             }
         }
     }
@@ -212,24 +216,23 @@ string DataManager::ReconstructURL(string &referent)
     return result;
 } //----- Fin de Méthode
 
-
-void MakeDotText(DataManager & SomeData)
+void MakeDotText(DataManager &SomeData)
 {
-vector<string> tab_node;
-    cout<<"{"<<endl;
-    for(map<string, Node>::iterator t = SomeData.data.begin();t!=SomeData.data.end();t++)
-    {  
+    vector<string> tab_node;
+    cout << "{" << endl;
+    for (map<string, Node>::iterator t = SomeData.data.begin(); t != SomeData.data.end(); t++)
+    {
         vector<std::string>::iterator iter = find(tab_node.begin(), tab_node.end(), t->first);
         if (iter == tab_node.end())
         {
             tab_node.push_back(t->first);
             iter = find(tab_node.begin(), tab_node.end(), t->first);
             int indice_ = distance(tab_node.begin(), iter);
-            cout<< "node"<< indice_ << "[label :" << t->first << "]" << endl;
+            cout << "node" << indice_ << "[label :" << t->first << "]" << endl;
         }
-        int  indice_ = distance(tab_node.begin(), iter);
-        
-        for(map<std::string, int>::iterator p = t->second.dico.begin();p!=t->second.dico.end();p++)
+        int indice_ = distance(tab_node.begin(), iter);
+
+        for (map<std::string, int>::iterator p = t->second.dico.begin(); p != t->second.dico.end(); p++)
         {
             vector<std::string>::iterator it = find(tab_node.begin(), tab_node.end(), p->first);
             if (it == tab_node.end())
@@ -237,11 +240,11 @@ vector<string> tab_node;
                 tab_node.push_back(p->first);
                 it = find(tab_node.begin(), tab_node.end(), p->first);
                 int indice = distance(tab_node.begin(), it);
-                cout<< "node"<< indice << "[label :" << p->first << "]" << endl;
+                cout << "node" << indice << "[label :" << p->first << "]" << endl;
             }
             int indice = distance(tab_node.begin(), it);
-            cout << "node" << indice << "-> node" << indice_ <<"[label : "<< p->second << "]"<< endl;
+            cout << "node" << indice << "-> node" << indice_ << "[label : " << p->second << "]" << endl;
         }
     }
-    cout<<"}"<<endl;
+    cout << "}" << endl;
 }
