@@ -41,34 +41,32 @@ class DataManager
 public:
     friend ostream &operator<<(ostream &out, const DataManager &dm);
 
-    friend void MakeDotText(DataManager & SomeData);
+    friend void MakeDotText(DataManager &SomeData);
     // Mode d'emploi :
-    //SomeData: Référence d'un objet de DataManager
-    //La méthode crée le texte correspondant au fichier.dot  
+    // SomeData: Référence d'un objet de DataManager
+    // La méthode crée le texte correspondant au fichier.dot
 
     //----------------------------------------------------- Méthodes publiques
     void top10();
     // Mode d'emploi :
     // Méthode qui fournit le top 10 des URL visités
     // Contrat :
-    //En cas d'égalité, on prend le top 10 en tenant en compte l'ordre alphabétique
+    // En cas d'égalité, on prend le top 10 en tenant en compte l'ordre alphabétique
 
     //------------------------------------------------- Surcharge d'opérateurs
     DataManager &operator=(const DataManager &unDataManager);
 
-
     //-------------------------------------------- Constructeurs - destructeur
     DataManager(const DataManager &unDataManager);
 
-
     DataManager(const string &path, int time, string graph, int htmlOnly);
     // Mode d'emploi :
-    //path     : réference de l'adresse du fichier.log
-    //time     :si -1 , ne prend pas le temps en compte, sinon conserve uniquement les requêtes entre t et t+1
-    //graph    :si non vide , crée un fichier graph.dot
-    //htmlOnly :si 1 , ne prend pas en compte les requetes qui ne sont pas en html
-    //Contrat  :
-    //Pour prendre en compte les requêtes en temps entre t et t+1 , prend en compte les requetes entre T:00 et T:59 inclu
+    // path     : réference de l'adresse du fichier.log
+    // time     :si -1 , ne prend pas le temps en compte, sinon conserve uniquement les requêtes entre t et t+1
+    // graph    :si non vide , crée un fichier graph.dot
+    // htmlOnly :si 1 , ne prend pas en compte les requetes qui ne sont pas en html
+    // Contrat  :
+    // Pour prendre en compte les requêtes en temps entre t et t+1 , prend en compte les requetes entre T:00 et T:59 inclu
 
     virtual ~DataManager();
     // Mode d'emploi :
@@ -82,17 +80,14 @@ protected:
     //----------------------------------------------------- Méthodes protégées
     int GetData(Reader &r, int time, string graph, int htmlOnly);
     // Mode d'emploi :
-    //r        :référence d'un objet Reader
-    //htmlOnly :si 1 , ne prend pas en compte les requetes qui ne sont pas en html
-    //graph    :si non vide , crée un fichier graph.dot
-    //time     :si -1 , ne prend pas le temps en compte, sinon conserve uniquement les requêtes entre t et t+1
+    // r        :référence d'un objet Reader
+    // htmlOnly :si 1 , ne prend pas en compte les requetes qui ne sont pas en html
+    // graph    :si non vide , crée un fichier graph.dot
+    // time     :si -1 , ne prend pas le temps en compte, sinon conserve uniquement les requêtes entre t et t+1
 
-
-
-    string ReconstructURL(string &referent);
-    // Mode d'emploi : 
+    void ReconstructURL(string &referent, string &cible);
+    // Mode d'emploi :
     // L'URL des cibles n'est pas complète, il faut la reconstruire
-
 
     //----------------------------------------------------- Attributs protégés
     bool t = false;

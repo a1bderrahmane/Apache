@@ -28,7 +28,7 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 int Reader::GetRequest(Request &requete)
- // Algorithme :
+// Algorithme :
 // Cette méthode récupère une requête à partir d'une ligne d'un fichier logfile et la stocke dans un objet Request passé par référence.
 // Elle lit chaque ligne du fichier journal, analyse et extrait les informations de la requête, puis les stocke dans l'objet Request.
 

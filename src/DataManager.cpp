@@ -31,9 +31,9 @@ void DataManager::top10()
     // Cette fonction récupère les 10 premières cibles en fonction de la valeur 'Hit' dans la map 'data'.
     // Elle crée une copie de la map d'origine pour éviter de modifier la map originale.
 
-    //Créer une copie de la map 'data'
+    // Créer une copie de la map 'data'
     map<string, Node> copyData = data;
-    //Initialiser un vecteur pour stocker les paires d'URL et de compte de hits (10 maxima)
+    // Initialiser un vecteur pour stocker les paires d'URL et de compte de hits (10 maxima)
     vector<pair<string, int>> top;
     // Itérer 10 fois pour trouver les 10 premières entrées
     for (int i = 0; i < 10; ++i)
@@ -50,17 +50,17 @@ void DataManager::top10()
             {
                 // Mettre à jour le nombre de hits maximum et l'URL correspondant
                 max = it->second.Hit;
-                it->second.Hit = -1; //cette cible ne doit plus être prise en compte
+                it->second.Hit = -1; // cette cible ne doit plus être prise en compte
                 URLmax = it->first;
             }
         }
-        //Ajouter la paire d'URL et de compte de hits au vecteur 'top'
+        // Ajouter la paire d'URL et de compte de hits au vecteur 'top'
         top.push_back(make_pair(URLmax, max));
     }
-    //Afficher les 10 premières entrées
+    // Afficher les 10 premières entrées
     for (vector<pair<string, int>>::iterator iter = top.begin(); iter != top.end(); ++iter)
     {
-        cout << iter->first << "(" << iter->second << " hits)" << endl;
+        cout << (*iter).first << "(" << (*iter).second << " hits)" << endl;
     }
 
 } // Fin de Méthode
@@ -93,7 +93,7 @@ DataManager &DataManager::operator=(const DataManager &unDataManager)
 // Algorithme :
 //
 {
-    data=unDataManager.data;
+    data = unDataManager.data;
     return *this;
 } //----- Fin de operator =
 
@@ -102,21 +102,20 @@ DataManager::DataManager(const DataManager &unDataManager)
 // Algorithme :
 //
 {
-    data=unDataManager.data;
+    data = unDataManager.data;
 #ifdef MAP
     cout << "Appel au constructeur de copie de <DataManager>" << endl;
 #endif
 } //----- Fin de DataManager (constructeur de copie)
 
-
 DataManager::DataManager(const string &path, int time, string graph, int htmlOnly)
 // Algorithme :
-//Utilise la méthode GetData pour créer un objet de DataManager
+// Utilise la méthode GetData pour créer un objet de DataManager
 {
 #ifdef MAP
     cout << "Appel au constructeur de <DataManager>" << endl;
 #endif
-    Reader reader(path); //instancie un Reader
+    Reader reader(path); // instancie un Reader
     GetData(reader, time, graph, htmlOnly);
     if (!graph.empty())
     {
@@ -141,10 +140,10 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
 // Elle analyse chaque requête, vérifie si elle satisfait les conditions spécifiées, et met à jour la structure de données (data).
 {
     Request req;
-    string referer = ReconstructURL(req.referer); //si l'URL est locale, garde seulement la partie locale
     bool flag;
     while (!r.GetRequest(req))
     {
+        ReconstructURL(req.referer, req.URL); // si l'URL est locale, garde seulement la partie locale
         flag = true;
         // Vérifier si le statut de la requête est 200 (OK)
         if (req.status != 200)
@@ -155,43 +154,46 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
         if (flag == true && htmlOnly == 1 && req.URL.substr(req.URL.size() - 4, 4) != "html")
         {
             flag = false;
-            cout << "HTML Only" << endl;
+            /* cout << "HTML Only" << endl; */
         }
         // Vérifier si la requête est dans la plage horaire spécifiée
 
         if (flag == true && time != -1 && stoi(req.heure.substr(0, 2)) != time)
         {
             flag = false;
-            cout << "Time : "
-                 << time << endl;
+            /* cout << "Time : "
+                 << time << endl; */
         }
-        // Mettre à jour les données en fonction de la requête
-        if (data.find(req.URL) != data.end())
+        if (flag == true)
         {
-            // La requête existe déjà dans les données, mettre à jour le compteur de hits
-            data[req.URL].Hit++;
-            // Mettre à jour le dictionnaire de référents si la fonctionnalité de graphe est activée
-            if (graph.empty() == false)
+            // Mettre à jour les données en fonction de la requête
+            if (data.find(req.URL) != data.end())
             {
-                if (data[req.URL].Dico.find(string(referer)) != data[req.URL].Dico.end()) //si l'URL est déjà présente dans dico
+                // La requête existe déjà dans les données, mettre à jour le compteur de hits
+                data[req.URL].Hit++;
+                // Mettre à jour le dictionnaire de référents si la fonctionnalité de graphe est activée
+                if (graph.empty() == false)
                 {
-                    data[req.URL].Dico[referer]++;
-                }
-                else //il faut créer l'URL dans dico
-                {
-                    data[req.URL].Dico[referer] = 1;
+                    if (data[req.URL].Dico.find(string(req.referer)) != data[req.URL].Dico.end()) // si l'URL est déjà présente dans dico
+                    {
+                        data[req.URL].Dico[req.referer]++;
+                    }
+                    else // il faut créer l'URL dans dico
+                    {
+                        data[req.URL].Dico[req.referer] = 1;
+                    }
                 }
             }
-        }
-        else
-        {
-            // La requête est nouvelle, créer un nouveau Node
-            Node n;
-            n.Hit++;
-            // Mettre à jour la map de référents si la fonctionnalité de graphe est activée
-            if (graph.empty() == false)
+            else
             {
-                n.Dico[referer] = 1;
+                // La requête est nouvelle, créer une nouveau Node
+                Node n;
+                n.Hit++;
+                // Mettre à jour la map de référents si la fonctionnalité de graphe est activée
+                if (graph.empty() == false)
+                {
+                    n.Dico[req.referer] = 1;
+                }
                 data[req.URL] = n;
             }
         }
@@ -199,7 +201,7 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
     return 0;
 } //----- Fin de Méthode
 
-string DataManager::ReconstructURL(string &referent)
+void DataManager::ReconstructURL(string &referent, string &cible)
 // Algorithme :
 // Cette méthode reconstruit une URL à partir d'une chaîne de référence en considérant les caractères '/' et '.'.
 // Elle recherche le dernier '/' et '.' dans la chaîne, puis reconstruit l'URL en prenant la sous-chaîne entre ces positions.
@@ -219,7 +221,7 @@ string DataManager::ReconstructURL(string &referent)
             slash = true;
             slash_pos = i;
         }
-        else if (referent[i] == '.')
+        else if (referent[i] == '.' || referent[i] == ':')
         {
             point = true;
         }
@@ -231,33 +233,44 @@ string DataManager::ReconstructURL(string &referent)
     }
     // Reconstruction de l'URL à partir de la sous-chaîne entre le dernier '/' et '.'
 
-    string result = referent.substr(slash_pos, referent.size() - 1);
+    referent = referent.substr(slash_pos, referent.size() - 1);
     // Supprimer le dernier '/' s'il est présent à la fin de la sous-chaîne
-
-    if (result[result.size() - 1] == '/')
+    int j = referent.size();
+    while (referent[j - 1] == '/')
     {
-        result = result.substr(0, result.size() - 1);
+        referent = referent.substr(0, j - 1);
+        j--;
     }
-    cout << result << endl;
-    return result;
+    /* cout << result << endl; */
+    int t = cible.size();
+    while (cible[t - 1] == '/')
+    {
+        cible = cible.substr(0, t - 1);
+        j--;
+    }
 } //----- Fin de Méthode
 
-
-void MakeDotText(DataManager & SomeData)
+void MakeDotText(DataManager &SomeData)
 // Algorithme :
 // Cette fonction génère du code DOT pour représenter graphiquement les données stockées dans SomeData.
 // Les données consistent en une map principale (data) contenant des nœuds, chacun associé à un label et un dictionnaire (dico)
 // avec des relations vers d'autres nœuds et des poids pour ces relations.
 {
-// Vecteur pour suivre les nœuds déjà traités
-vector<string> tab_node;
-    cout<<"{"<<endl;
+    // Vecteur pour suivre les nœuds déjà traités
+    vector<string> tab_node;
+    cout << "digraph {"
+         << "fontname=\"Helvetica,Arial,sans-serif\";" << endl
+         << "node [fontname=\"Helvetica,Arial,sans-serif\"];" << endl
+         << "edge [fontname=\"Helvetica,Arial,sans-serif\"];" << endl
+         << "overlap = scale;"
+         << "layout=sfdp;" << endl
+         << "graph [ranksep=3, root=\" node0 \", overlap=prism];" << endl;
     // Parcours de la map principale
-    for(map<string, Node>::iterator t = SomeData.data.begin();t!=SomeData.data.end();t++)
-    {          
+    for (map<string, Node>::iterator t = SomeData.data.begin(); t != SomeData.data.end(); t++)
+    {
         // Vérifier si le nœud a déjà été traité
         vector<std::string>::iterator iter = find(tab_node.begin(), tab_node.end(), t->first);
-        // Si le nœud n'a pas encore été traitéc
+        // Si le nœud n'a pas encore été traité
         if (iter == tab_node.end())
         {
             // Ajouter le nœud au vecteur et obtenir son indice
@@ -265,12 +278,16 @@ vector<string> tab_node;
             iter = find(tab_node.begin(), tab_node.end(), t->first);
             int indice_ = distance(tab_node.begin(), iter);
             // Afficher le nœud avec son libellé
-            cout<< "node"<< indice_ << "[label :" << t->first << "]" << endl;
+            if (t->first == "/temps/")
+            {
+                cout << "abcdefg" << endl;
+            }
+            cout << "node" << indice_ << "[label=\"" << t->first << "\"]" << endl;
         }
         // Obtenir l'indice du nœud
-        int  indice_ = distance(tab_node.begin(), iter);
+        int indice_ = distance(tab_node.begin(), iter);
         // Parcours de la map dans chaque nœud
-        for(map<std::string, int>::iterator p = t->second.Dico.begin();p!=t->second.Dico.end();p++)
+        for (map<std::string, int>::iterator p = t->second.Dico.begin(); p != t->second.Dico.end(); p++)
         {
             // Vérifier si le nœud a déjà été traité
             vector<std::string>::iterator it = find(tab_node.begin(), tab_node.end(), p->first);
@@ -283,13 +300,13 @@ vector<string> tab_node;
                 it = find(tab_node.begin(), tab_node.end(), p->first);
                 int indice = distance(tab_node.begin(), it);
                 // Afficher le nœud avec son libellé
-                cout<< "node"<< indice << "[label :" << p->first << "]" << endl;
+                cout << "node" << indice << "[label=\"" << p->first << "\"]" << endl;
             }
             // Obtenir l'indice du nœud
             int indice = distance(tab_node.begin(), it);
             // Afficher la relation entre les nœuds avec le libellé
-            cout << "node" << indice << "-> node" << indice_ <<"[label : "<< p->second << "]"<< endl;
+            cout << "node" << indice << " -> node" << indice_ << "[label=\"" << p->second << "\"]" << endl;
         }
     }
-    cout<<"}"<<endl;
+    cout << "}" << endl;
 }
