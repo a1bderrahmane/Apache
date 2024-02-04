@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
        cout << "Referer: " << requete.referer << endl;
        cout << "User_agent: " << requete.user_agent << endl; 
     */
+
     int time = -1;
     int htmlOnly = 0;
     string graph;
@@ -69,10 +70,9 @@ int main(int argc, char *argv[])
     string path = argv[argc - 1];
     cout << "path : " << path << endl;
     DataManager dm(path, time, graph, htmlOnly);
-    //dm.top10();
+    dm.top10();
     if (graph.empty() == false)
     {
-        cout<<"graph vaut "<<graph;
         Graph (graph).MakeGraph(dm);
     }
     cout << dm;

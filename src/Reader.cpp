@@ -79,7 +79,7 @@ Reader::Reader(const string &path)
     cout << "reader path : " << this->path << endl;
     if (!logfile.is_open())
     {
-        cerr << "Erreur d'ouverture de <analog.log>" << endl;
+        cerr << "Erreur d'ouverture de < "<<path<<"> dans Reader" << endl;
     }
 } //----- Fin de Reader
 
