@@ -2,7 +2,7 @@
                            DataManager  -  description
                              -------------------
     début                : 01/02/2024
-    copyright            : (C) 2024 par DRAVET Eléonore, BOUZIANE Abderrahmane, WIRANE Hamza, VIALLETON Rémi
+    copyright            : (C) 2023 par DRAVET Eléonore, BOUZIANE Abderrahmane, WIRANE Hamza, VIALLETON Rémi
     e-mail               : eleonore.dravet@insa-lyons.fr
                            abderrahmane.bouziane@insa-lyon.fr
                            hamza.wirane@insa-lyon.fr
