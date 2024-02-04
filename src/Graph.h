@@ -39,8 +39,7 @@ public:
     // Mode d'emploi :
     //Somedata: référence d'un objet DataManager
     // La méthode écrit dans le fichier.dot 
-    //------------------------------------------------- Surcharge d'opérateurs
-    Graph &operator=(const Graph &unGraph);
+
     //-------------------------------------------- Constructeurs - destructeur
     Graph(const Graph &unGraph);
     // Mode d'emploi (constructeur de copie) :

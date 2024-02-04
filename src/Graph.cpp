@@ -29,7 +29,7 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 void Graph::MakeGraph(DataManager &SomeData)
 // Algorithme :
-//On utilise la méthode ami de la classe DataManager MakeDotText pour faire l'affichage dans le fichier.dot
+//On utilise la méthode amie de la classe DataManager MakeDotText pour faire l'affichage dans le fichier.dot
 {
     // Redirection du stream buffer associé à l’objet cout sur le stream buffer associé à OutputFile
     // en conservant l’adresse de l’ancien stream buffer de cout
@@ -39,12 +39,6 @@ void Graph::MakeGraph(DataManager &SomeData)
     // Restauration du stream buffer par défaut pour cout
     cout.rdbuf(originalCoutBuffer);
 }
-//------------------------------------------------- Surcharge d'opérateurs
-Graph &Graph::operator=(const Graph &unGraph)
-// Algorithme :
-//
-{
-} //----- Fin de operator =
 
 //-------------------------------------------- Constructeurs - destructeur
 Graph::Graph(const Graph &unGraph)

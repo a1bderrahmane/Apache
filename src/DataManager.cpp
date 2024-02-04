@@ -74,7 +74,7 @@ ostream &operator<<(ostream &out, const DataManager &dm)
         cout << "Noeud : " << it->first << endl
              << "Hit : " << it->second.Hit << endl
              << "Map : ";
-        for (map<std::string, int>::const_iterator p = it->second.dico.cbegin(); p != it->second.dico.cend(); p++)
+        for (map<std::string, int>::const_iterator p = it->second.Dico.cbegin(); p != it->second.Dico.cend(); p++)
         {
             out << "{" << p->first;
             out << ":" << p->second << "}";
@@ -172,7 +172,7 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
             // Mettre à jour le dictionnaire de référents si la fonctionnalité de graphe est activée
             if (graph.empty() == false)
             {
-                if (data[req.URL].Dico.find(string(referer)) != data[req.URL].dico.end()) //si l'URL est déjà présente dans dico
+                if (data[req.URL].Dico.find(string(referer)) != data[req.URL].Dico.end()) //si l'URL est déjà présente dans dico
                 {
                     data[req.URL].Dico[referer]++;
                 }
