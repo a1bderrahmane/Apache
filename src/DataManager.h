@@ -26,8 +26,8 @@
 //------------------------------------------------------------------ Types
 typedef struct Node
 {
-    int hit = 0;
-    map<string, int> dico;
+    int Hit = 0;
+    map<string, int> Dico;
 } Node;
 //------------------------------------------------------------------------
 // Rôle de la classe <DataManager>

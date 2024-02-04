@@ -28,30 +28,29 @@ using namespace std;
 void DataManager::top10()
 {
     // Algorithme :
-    // Cette fonction récupère les 10 premières entrées en fonction de la valeur 'hit' dans la map 'data'.
+    // Cette fonction récupère les 10 premières cibles en fonction de la valeur 'Hit' dans la map 'data'.
     // Elle crée une copie de la map d'origine pour éviter de modifier la map originale.
 
     //Créer une copie de la map 'data'
     map<string, Node> copyData = data;
-    //Initialiser un vecteur pour stocker les paires d'URL et de compte de hits pour les 10 premières entrées
+    //Initialiser un vecteur pour stocker les paires d'URL et de compte de hits (10 maxima)
     vector<pair<string, int>> top;
     // Itérer 10 fois pour trouver les 10 premières entrées
     for (int i = 0; i < 10; ++i)
     {
         // Initialiser des variables pour suivre le nombre de hits maximum et l'URL correspondant
-        int max = data.begin()->second.hit;
+        int max = data.begin()->second.Hit;
         string URLmax = data.begin()->first;
 
         // Itérer à travers la map copyData pour trouver l'entrée avec le nombre de hits maximum
         for (map<string, Node>::iterator it = data.begin(); it != data.end(); ++it)
         {
             // Vérifier si le nombre de hits actuel est supérieur au maximum actuel
-
-            if (it->second.hit > max && it->second.hit != -1)
+            if (it->second.Hit > max && it->second.Hit != -1)
             {
                 // Mettre à jour le nombre de hits maximum et l'URL correspondant
-                max = it->second.hit;
-                it->second.hit = -1;
+                max = it->second.Hit;
+                it->second.Hit = -1; //cette cible ne doit plus être prise en compte
                 URLmax = it->first;
             }
         }
@@ -66,19 +65,20 @@ void DataManager::top10()
 
 } // Fin de Méthode
 
+//------------------------------------------------- Surcharge d'opérateurs
 ostream &operator<<(ostream &out, const DataManager &dm)
 {
     cout << "data : " << endl;
     for (map<string, Node>::const_iterator it = dm.data.cbegin(); it != dm.data.cend(); ++it)
     {
         cout << "Noeud : " << it->first << endl
-             << "Hit : " << it->second.hit << endl
+             << "Hit : " << it->second.Hit << endl
              << "Map : ";
         for (map<std::string, int>::const_iterator p = it->second.dico.cbegin(); p != it->second.dico.cend(); p++)
         {
             out << "{" << p->first;
             out << ":" << p->second << "}";
-            if (p != next(it->second.dico.end(), -1))
+            if (p != next(it->second.Dico.end(), -1))
             {
                 out << ",";
             }
@@ -89,11 +89,11 @@ ostream &operator<<(ostream &out, const DataManager &dm)
     return out;
 } //----- Fin de Méthode
 
-//------------------------------------------------- Surcharge d'opérateurs
 DataManager &DataManager::operator=(const DataManager &unDataManager)
 // Algorithme :
 //
 {
+    data=unDataManager.data;
 } //----- Fin de operator =
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -101,10 +101,12 @@ DataManager::DataManager(const DataManager &unDataManager)
 // Algorithme :
 //
 {
+    data=unDataManager.data;
 #ifdef MAP
     cout << "Appel au constructeur de copie de <DataManager>" << endl;
 #endif
 } //----- Fin de DataManager (constructeur de copie)
+
 
 DataManager::DataManager(const string &path, int time, string graph, int htmlOnly)
 // Algorithme :
@@ -113,7 +115,7 @@ DataManager::DataManager(const string &path, int time, string graph, int htmlOnl
 #ifdef MAP
     cout << "Appel au constructeur de <DataManager>" << endl;
 #endif
-    Reader reader(path);
+    Reader reader(path); //instancie un Reader
     GetData(reader, time, graph, htmlOnly);
     if (!graph.empty())
     {
@@ -123,8 +125,6 @@ DataManager::DataManager(const string &path, int time, string graph, int htmlOnl
 } //----- Fin de DataManager
 
 DataManager::~DataManager()
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au destructeur de <DataManager>" << endl;
@@ -138,10 +138,9 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
 // Algorithme :
 // Cette méthode récupère des données à partir d'un objet Reader en fonction de certains critères.
 // Elle analyse chaque requête, vérifie si elle satisfait les conditions spécifiées, et met à jour la structure de données (data).
-
 {
     Request req;
-    string referer = ReconstructURL(req.referer);
+    string referer = ReconstructURL(req.referer); //si l'URL est locale, garde seulement la partie locale
     bool flag;
     while (!r.GetRequest(req))
     {
@@ -169,17 +168,17 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
         if (data.find(req.URL) != data.end())
         {
             // La requête existe déjà dans les données, mettre à jour le compteur de hits
-            data[req.URL].hit++;
+            data[req.URL].Hit++;
             // Mettre à jour le dictionnaire de référents si la fonctionnalité de graphe est activée
             if (graph.empty() == false)
             {
-                if (data[req.URL].dico.find(string(referer)) != data[req.URL].dico.end())
+                if (data[req.URL].Dico.find(string(referer)) != data[req.URL].dico.end()) //si l'URL est déjà présente dans dico
                 {
-                    data[req.URL].dico[referer]++;
+                    data[req.URL].Dico[referer]++;
                 }
-                else
+                else //il faut créer l'URL dans dico
                 {
-                    data[req.URL].dico[referer] = 1;
+                    data[req.URL].Dico[referer] = 1;
                 }
             }
         }
@@ -187,11 +186,11 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
         {
             // La requête est nouvelle, créer une nouveau Node
             Node n;
-            n.hit++;
+            n.Hit++;
             // Mettre à jour la map de référents si la fonctionnalité de graphe est activée
             if (graph.empty() == false)
             {
-                n.dico[referer] = 1;
+                n.Dico[referer] = 1;
                 data[req.URL] = n;
             }
         }
@@ -271,7 +270,7 @@ vector<string> tab_node;
         // Obtenir l'indice du nœud
         int  indice_ = distance(tab_node.begin(), iter);
         // Parcours de la map dans chaque nœud
-        for(map<std::string, int>::iterator p = t->second.dico.begin();p!=t->second.dico.end();p++)
+        for(map<std::string, int>::iterator p = t->second.Dico.begin();p!=t->second.Dico.end();p++)
         {
             // Vérifier si le nœud a déjà été traité
             vector<std::string>::iterator it = find(tab_node.begin(), tab_node.end(), p->first);
