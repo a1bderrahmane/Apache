@@ -131,26 +131,27 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
         flag = true;
         if (req.status != 200)
         {
+            /* cout << "status : " << req.status << endl; */
             flag = false;
         }
 
         if (flag == true && htmlOnly == 1 && req.URL.substr(req.URL.size() - 4, 4) != "html")
         {
-            flag = false;
-            cout << "HTML Only" << endl;
+            /* flag = false;
+            cout << "HTML Only" << endl; */
         }
 
         if (flag == true && time != -1 && stoi(req.heure.substr(0, 2)) != time)
         {
             flag = false;
-            cout << "Time : "
-                 << time << endl;
+            /* cout << "Time : "
+                 << time << endl; */
         }
 
         if (data.find(req.URL) != data.end())
         {
             data[req.URL].hit++;
-            if (graph.empty() == false)
+            if (!graph.empty())
             {
                 if (data[req.URL].dico.find(string(referer)) != data[req.URL].dico.end())
                 {
@@ -166,11 +167,11 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
         {
             Node n;
             n.hit++;
-            if (graph.empty() == false)
+            if (!graph.empty())
             {
                 n.dico[referer] = 1;
-                data[req.URL] = n;
             }
+            data[req.URL] = n;
         }
     }
 
@@ -202,7 +203,7 @@ string DataManager::ReconstructURL(string &referent)
             break;
         }
     }
-
+    cout << slash_pos << endl;
     string result = referent.substr(slash_pos, referent.size() - 1);
     if (result[result.size() - 1] == '/')
     {
