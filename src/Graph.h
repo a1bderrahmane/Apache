@@ -58,6 +58,10 @@ public:
     // Contrat :
     //
     void MakeGraph(DataManager &SomeData);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
     virtual ~Graph();
     // Mode d'emploi :
     //

@@ -17,7 +17,7 @@
 #include <map>
 #include <vector>
 #include <utility>
-
+#include <algorithm>
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -38,12 +38,12 @@ class DataManager
 
 public:
     friend ostream &operator<<(ostream &out, const DataManager &dm);
+    friend void MakeDotText(DataManager & SomeData);
+
     //----------------------------------------------------- Méthodes publiques
     void top10();
-
     //------------------------------------------------- Surcharge d'opérateurs
-    DataManager &
-    operator=(const DataManager &unDataManager);
+    DataManager &operator=(const DataManager &unDataManager);
     // Mode d'emploi :
     //
     // Contrat :

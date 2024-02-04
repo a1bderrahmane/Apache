@@ -211,3 +211,37 @@ string DataManager::ReconstructURL(string &referent)
     cout << result << endl;
     return result;
 } //----- Fin de Méthode
+
+
+void MakeDotText(DataManager & SomeData)
+{
+vector<string> tab_node;
+    cout<<"{"<<endl;
+    for(map<string, Node>::iterator t = SomeData.data.begin();t!=SomeData.data.end();t++)
+    {  
+        vector<std::string>::iterator iter = find(tab_node.begin(), tab_node.end(), t->first);
+        if (iter == tab_node.end())
+        {
+            tab_node.push_back(t->first);
+            iter = find(tab_node.begin(), tab_node.end(), t->first);
+            int indice_ = distance(tab_node.begin(), iter);
+            cout<< "node"<< indice_ << "[label :" << t->first << "]" << endl;
+        }
+        int  indice_ = distance(tab_node.begin(), iter);
+        
+        for(map<std::string, int>::iterator p = t->second.dico.begin();p!=t->second.dico.end();p++)
+        {
+            vector<std::string>::iterator it = find(tab_node.begin(), tab_node.end(), p->first);
+            if (it == tab_node.end())
+            {
+                tab_node.push_back(p->first);
+                it = find(tab_node.begin(), tab_node.end(), p->first);
+                int indice = distance(tab_node.begin(), it);
+                cout<< "node"<< indice << "[label :" << p->first << "]" << endl;
+            }
+            int indice = distance(tab_node.begin(), it);
+            cout << "node" << indice << "-> node" << indice_ <<"[label : "<< p->second << "]"<< endl;
+        }
+    }
+    cout<<"}"<<endl;
+}

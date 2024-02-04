@@ -61,7 +61,7 @@ void Graph::MakeGraph(DataManager &SomeData)
 {
     streambuf *originalCoutBuffer = cout.rdbuf();
     cout.rdbuf(outputFile.rdbuf());
-    cout << SomeData << endl;
+    MakeDotText(SomeData);
     cout.rdbuf(originalCoutBuffer);
 }
 Graph::Graph(string name)
