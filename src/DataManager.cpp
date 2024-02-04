@@ -153,7 +153,7 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
             if (data.find(req.URL) != data.end())
             {
                 data[req.URL].hit++;
-                if (graph.empty() == false)
+                if (!graph.empty())
                 {
                     if (data[req.URL].dico.find(string(referer)) != data[req.URL].dico.end())
                     {
@@ -169,11 +169,11 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
             {
                 Node n;
                 n.hit++;
-                if (graph.empty() == false)
+                if (!graph.empty())
                 {
                     n.dico[referer] = 1;
-                    data[req.URL] = n;
                 }
+                data[req.URL] = n;
             }
         }
     }
