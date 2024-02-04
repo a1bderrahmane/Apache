@@ -32,25 +32,25 @@ int main(int argc, char *argv[])
             if (stoi(argv[i + 1]) >= 0 && stoi(argv[i + 1]) < 24)
             {
                 time = stoi(argv[i + 1]);
-                cout << time << endl;
+                cout << "Time : " << time << endl;
             }
         }
         else if (string(argv[i]) == "-e")
         {
             htmlOnly = 1;
-            cout << htmlOnly << endl;
+            cout << "htmlOnly : " << htmlOnly << endl;
         }
         else if (string(argv[i]) == "-g")
         {
             if (string(argv[i + 1]).substr(string(argv[i + 1]).size() - 4, 4) == ".dot")
             {
                 graph = string(argv[i + 1]);
-                cout << graph << endl;
+                cout << "graph : " << graph << endl;
             }
         }
     }
-    string path = argv[i];
-    cout << path << endl;
+    string path = argv[argc - 1];
+    cout << "path : " << path << endl;
     DataManager dm(path, time, graph, htmlOnly);
     cout << dm;
     /* string a = "a";

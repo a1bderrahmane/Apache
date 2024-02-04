@@ -124,32 +124,36 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
 //
 {
     Request req;
-    string referer = ReconstructURL(req.referer);
     bool flag;
     while (!r.GetRequest(req))
     {
+        string referer = ReconstructURL(req.referer);
         flag = true;
         if (req.status != 200)
         {
             flag = false;
         }
 
-        if (flag == true && htmlOnly == 1 && req.URL.substr(req.URL.size() - 4, 4) != "html")
+        if (req.URL != "/")
         {
-            flag = false;
-            cout << "HTML Only" << endl;
+            if (flag == true && htmlOnly == 1 && req.URL.substr(req.URL.size() - 4, 4) != "html")
+            {
+                flag = false;
+                /* cout << "HTML Only" << endl; */
+            }
         }
 
         if (flag == true && time != -1 && stoi(req.heure.substr(0, 2)) != time)
         {
             flag = false;
-            cout << "Time : "
-                 << time << endl;
+            /* cout << "Time : "
+                 << time << endl; */
         }
 
         if (flag == true)
         {
-            cout << referer << endl;
+            /*  cout << "referer : " << referer << endl; */
+            /* cout << referer << endl; */
             if (data.find(req.URL) != data.end())
             {
                 data[req.URL].hit++;
@@ -206,13 +210,14 @@ string DataManager::ReconstructURL(string &referent)
             break;
         }
     }
+    c /* out << "slash pos : " << slash_pos << endl; */
 
-    string result = referent.substr(slash_pos, referent.size() - 1);
+        string result = referent.substr(slash_pos, referent.size() - 1);
     if (result[result.size() - 1] == '/')
     {
         result = result.substr(0, result.size() - 1);
     }
-    cout << result << endl;
+    /* cout << result << endl; */
     return result;
 } //----- Fin de Méthode
 

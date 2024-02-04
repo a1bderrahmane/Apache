@@ -81,10 +81,12 @@ Reader::Reader(const string &path)
 #endif
 
     this->path = path;
-    logfile.open(path);
-    if ((logfile.rdstate() & ifstream::failbit) != 0)
+    logfile.open(this->path);
+    cout << "reader path : " << this->path << endl;
+    if (!logfile.is_open())
     {
         cerr << "Erreur d’ouverture de <analog.log>" << endl;
+        exit(1);
     }
 } //----- Fin de Reader
 
