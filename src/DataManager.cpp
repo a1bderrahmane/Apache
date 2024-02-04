@@ -145,7 +145,6 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
     bool flag;
     while (!r.GetRequest(req))
     {
-        cout<<req.URL<<endl;
         flag = true;
         // Vérifier si le statut de la requête est 200 (OK)
         if (req.status != 200)
@@ -189,7 +188,6 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
             // La requête est nouvelle, créer un nouveau Node
             Node n;
             n.Hit++;
-            cout<<n.Hit<<endl;
             // Mettre à jour la map de référents si la fonctionnalité de graphe est activée
             if (graph.empty() == false)
             {
