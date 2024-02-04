@@ -17,15 +17,16 @@ using namespace std;
 #include <iostream>
 //------------------------------------------------------ Include personnel
 #include "DataManager.h"
-#include "Request.h"
+#include "Graph.h"
 #include "Reader.h"
 
 int main(int argc, char *argv[])
 {
-    /*    Request requete;
-       Reader rd = Reader("/tmp/analog.log");
+    /*
+        Request requete;
+       Reader rd = Reader("/tmp/log");
 
-       r.GetRequest(requete);
+       rd.GetRequest(requete);
 
        cout << "le requete: " << endl;
        cout << "IP: " << requete.ip << endl;
@@ -35,7 +36,8 @@ int main(int argc, char *argv[])
        cout << "Status: " << requete.status << endl;
        cout << "Size: " << requete.size << endl;
        cout << "Referer: " << requete.referer << endl;
-       cout << "User_agent: " << requete.user_agent << endl; */
+       cout << "User_agent: " << requete.user_agent << endl; 
+    */
     int time = -1;
     int htmlOnly = 0;
     string graph;
@@ -67,6 +69,12 @@ int main(int argc, char *argv[])
     string path = argv[argc - 1];
     cout << "path : " << path << endl;
     DataManager dm(path, time, graph, htmlOnly);
+    //dm.top10();
+    if (graph.empty() == false)
+    {
+        cout<<"graph vaut "<<graph;
+        Graph (graph).MakeGraph(dm);
+    }
     cout << dm;
     /* string a = "a";
     string b = "b";
@@ -75,9 +83,9 @@ int main(int argc, char *argv[])
     Node n(a, b);
     n.MAJ(c);
     n.MAJ(c);
-    cout << n << endl; */
+    cout << n << endl; 
 
-    /* for (int i = 0; i < argc; i++)
+    for (int i = 0; i < argc; i++)
     {
         string str(argv[i]);
         if (str == "-g")
@@ -85,6 +93,6 @@ int main(int argc, char *argv[])
         }
     }
     DataManager d("/tmp/analog.log");
-    return 0; */
-    return 0;
+    */
+    return 0; 
 }

@@ -54,20 +54,9 @@ public:
     // Contrat :
     //La ligne lu par GetRequest doit être bien formulée et respect la syntaxe conventionelle
 
-    //------------------------------------------------- Surcharge d'opérateurs
-    Reader &operator=(const Reader &unReader);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
     //-------------------------------------------- Constructeurs - destructeur
     Reader(const Reader &unReader);
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
-
+  
     Reader(const string &path);
     // Mode d'emploi :
     //path: référence de l'adresse de <analog.log>

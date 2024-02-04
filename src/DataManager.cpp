@@ -94,6 +94,7 @@ DataManager &DataManager::operator=(const DataManager &unDataManager)
 //
 {
     data=unDataManager.data;
+    return *this;
 } //----- Fin de operator =
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -195,7 +196,6 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
             }
         }
     }
-
     return 0;
 } //----- Fin de Méthode
 
