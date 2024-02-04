@@ -49,20 +49,23 @@ int main(int argc, char *argv[])
             if (stoi(argv[i + 1]) >= 0 && stoi(argv[i + 1]) < 24)
             {
                 time = stoi(argv[i + 1]);
-                cout << "Time : " << time << endl;
+                /* cout << "Time : " << time << endl; */
             }
         }
         else if (string(argv[i]) == "-e")
         {
             htmlOnly = 1;
-            cout << "htmlOnly : " << htmlOnly << endl;
+            /*  cout << "htmlOnly : " << htmlOnly << endl; */
         }
         else if (string(argv[i]) == "-g")
         {
-            if (string(argv[i + 1]).substr(string(argv[i + 1]).size() - 4, 4) == ".dot")
+            if (string(argv[i + 1]).size() > 3)
             {
-                graph = string(argv[i + 1]);
-                cout << "graph : " << graph << endl;
+                if (string(argv[i + 1]).substr(string(argv[i + 1]).size() - 4, 4) == ".dot")
+                {
+                    graph = string(argv[i + 1]);
+                    /* cout << "graph : " << graph << endl; */
+                }
             }
         }
     }
@@ -72,9 +75,8 @@ int main(int argc, char *argv[])
         cerr << "Format du fichier invalide, veuillez entrer un fichier .log" << endl;
         exit(1);
     }
-    cout << "path : " << path << endl;
+    /* cout << "path : " << path << endl; */
     DataManager dm(path, time, graph, htmlOnly);
-    dm.top10();
     if (graph.empty() == false)
     {
         Graph(graph).MakeGraph(dm);

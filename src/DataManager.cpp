@@ -39,23 +39,35 @@ void DataManager::top10()
     for (int i = 0; i < 10; ++i)
     {
         // Initialiser des variables pour suivre le nombre de hits maximum et l'URL correspondant
-        int max = data.begin()->second.Hit;
-        string URLmax = data.begin()->first;
+        /* int max = data.begin()->second.Hit;
+        string URLmax = data.begin()->first; */
+
+        bool found = false;
+        map<string, Node>::iterator maxi = copyData.begin();
 
         // Itérer à travers la map copyData pour trouver l'entrée avec le nombre de hits maximum
-        for (map<string, Node>::iterator it = data.begin(); it != data.end(); ++it)
+        for (map<string, Node>::iterator it = copyData.begin(); it != copyData.end(); ++it)
         {
+            /* cout << "url :" << it->first << endl;
+            cout << "hit :" << it->second.Hit << endl; */
             // Vérifier si le nombre de hits actuel est supérieur au maximum actuel
-            if (it->second.Hit > max && it->second.Hit != -1)
+            if (it->second.Hit >= maxi->second.Hit && it->second.Hit != -1)
             {
+                found = true;
+                maxi = it;
                 // Mettre à jour le nombre de hits maximum et l'URL correspondant
-                max = it->second.Hit;
+                /* max = it->second.Hit;
                 it->second.Hit = -1; // cette cible ne doit plus être prise en compte
-                URLmax = it->first;
+                URLmax = it->first; */
             }
         }
-        // Ajouter la paire d'URL et de compte de hits au vecteur 'top'
-        top.push_back(make_pair(URLmax, max));
+        /* cout << "final :" << maxi->first << endl; */
+        if (found)
+        {
+            // Ajouter la paire d'URL et de compte de hits au vecteur 'top'
+            top.push_back(make_pair(maxi->first, maxi->second.Hit));
+            maxi->second.Hit = -1;
+        }
     }
     // Afficher les 10 premières entrées
     for (vector<pair<string, int>>::iterator iter = top.begin(); iter != top.end(); ++iter)
@@ -117,11 +129,7 @@ DataManager::DataManager(const string &path, int time, string graph, int htmlOnl
 #endif
     Reader reader(path); // instancie un Reader
     GetData(reader, time, graph, htmlOnly);
-    if (!graph.empty())
-    {
-        cout << "Appeler les méthodes de Graph" << endl;
-    }
-
+    top10();
 } //----- Fin de DataManager
 
 DataManager::~DataManager()
@@ -278,10 +286,6 @@ void MakeDotText(DataManager &SomeData)
             iter = find(tab_node.begin(), tab_node.end(), t->first);
             int indice_ = distance(tab_node.begin(), iter);
             // Afficher le nœud avec son libellé
-            if (t->first == "/temps/")
-            {
-                cout << "abcdefg" << endl;
-            }
             cout << "node" << indice_ << "[label=\"" << t->first << "\"]" << endl;
         }
         // Obtenir l'indice du nœud
