@@ -6,6 +6,9 @@ graph [ranksep=3, root=" node0 ", overlap=prism];
 node0[label="/temps/4IF16.html"]
 node1[label="/temps/4IF15.php"]
 node1 -> node0[label="1"]
-node2[label="/temps/4IF19.html"]
-node2 -> node2[label="1"]
+node2[label="/temps/4IF19.csv"]
+node3[label="/temps/4IF18.html"]
+node3 -> node2[label="1"]
+node4[label="/temps/4IF19.html"]
+node4 -> node4[label="1"]
 }

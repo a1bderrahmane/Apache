@@ -168,9 +168,28 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
             flag = false;
         }
         // Vérifier si la requête doit être de type HTML uniquement
-        if (req.URL.size() > 3)
+        set<string> EXTENSIONS_INTERDITES = {
+            ".js",
+            ".jsx",
+            ".css",
+            ".svg",
+            ".jpg",
+            ".jpeg",
+            ".gif",
+            ".png",
+            ".bmp"
+            ".tiff",
+            ".tif",
+            ".ai",
+            ".eps",
+            ".ico",
+            ".webp",
+            ".raw"};
+
+        size_t pos_point = req.URL.find_last_of('.');
+        if (pos_point != string::npos)
         {
-            if (flag == true && htmlOnly == 1 && req.URL.substr(req.URL.size() - 4, 4) != "html")
+            if (flag == true && htmlOnly == 1 && find(EXTENSIONS_INTERDITES.begin(), EXTENSIONS_INTERDITES.end(), req.URL.substr(pos_point, req.URL.size() - pos_point)) != EXTENSIONS_INTERDITES.end())
             {
                 flag = false;
                 /* cout << "HTML Only" << endl; */

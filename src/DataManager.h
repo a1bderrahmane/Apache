@@ -18,7 +18,9 @@
 #include <iterator>
 #include <map>
 #include <vector>
+#include <string>
 #include <utility>
+#include <set>
 #include <algorithm>
 //------------------------------------------------------------- Constantes
 
