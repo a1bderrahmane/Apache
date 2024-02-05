@@ -1,0 +1,1 @@
+../../bin/analog -g graph.dot -t 1 anonyme.log

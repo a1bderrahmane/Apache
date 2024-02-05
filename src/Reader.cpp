@@ -34,10 +34,9 @@ int Reader::GetRequest(Request &requete)
 
 {
     string line;
-
+    getline(logfile, line);
     if (logfile)
     {
-        getline(logfile, line);
         istringstream sflux(line);
         sflux >> requete.ip;
         sflux.ignore(numeric_limits<streamsize>::max(), '[');
@@ -55,7 +54,6 @@ int Reader::GetRequest(Request &requete)
 
         return 0;
     }
-
     return 1;
 
 } //----- Fin de Méthode
@@ -79,7 +77,8 @@ Reader::Reader(const string &path)
     /* cout << "reader path : " << this->path << endl; */
     if (!logfile.is_open())
     {
-        cerr << "Erreur d'ouverture de < " << path << "> dans Reader" << endl;
+        cerr << "Erreur d'ouverture de <" << path << "> dans Reader. Vérifiez que le chemin d'accès est correct et que le fichié existe bien." << endl;
+        exit(1);
     }
 } //----- Fin de Reader
 

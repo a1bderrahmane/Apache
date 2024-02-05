@@ -37,7 +37,6 @@ int main(int argc, char *argv[])
        cout << "Referer: " << requete.referer << endl;
        cout << "User_agent: " << requete.user_agent << endl;
     */
-
     int time = -1;
     int htmlOnly = 0;
     string graph;
@@ -50,6 +49,11 @@ int main(int argc, char *argv[])
             {
                 time = stoi(argv[i + 1]);
                 /* cout << "Time : " << time << endl; */
+            }
+            else
+            {
+                cerr << "Veuillez entrer une heure entre 0 et 24." << endl;
+                exit(1);
             }
         }
         else if (string(argv[i]) == "-e")
@@ -70,9 +74,9 @@ int main(int argc, char *argv[])
         }
     }
     string path = argv[argc - 1];
-    if (path.substr(path.size() - 4, 4) != ".log")
+    if (path.substr(path.size() - 4, 4) != ".log" && path.substr(path.size() - 4, 4) != ".txt")
     {
-        cerr << "Format du fichier invalide, veuillez entrer un fichier .log" << endl;
+        cerr << "Format du fichier invalide, veuillez entrer un fichier .log ou .txt." << endl;
         exit(1);
     }
     /* cout << "path : " << path << endl; */
@@ -81,7 +85,7 @@ int main(int argc, char *argv[])
     {
         Graph(graph).MakeGraph(dm);
     }
-    /* cout << dm; */
+    /*  cout << dm; */
     /* string a = "a";
     string b = "b";
     string c = "c";

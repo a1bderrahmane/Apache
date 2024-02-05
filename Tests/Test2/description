@@ -1,1 +1,1 @@
-Essai de test de recopie d'entrée standard
+Ce test permet de vérifier la commande avec l'option '-e' qui permet de ne prendre en compte que les requêtes vers des fichiers '.html'. Le fichier log contient des requêtes vers des fichiers de tous types.

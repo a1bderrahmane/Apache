@@ -1,1 +1,1 @@
-Test du code retour du programme correct
+Ce test permet de vérifier la commande avec l'option '-g' pour vérifier la création du graphe. Le fichier log contient des rêquetes entre différentes URLs et deux 'auto' requête.

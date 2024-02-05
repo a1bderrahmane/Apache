@@ -69,10 +69,19 @@ void DataManager::top10()
             maxi->second.Hit = -1;
         }
     }
-    // Afficher les 10 premières entrées
-    for (vector<pair<string, int>>::iterator iter = top.begin(); iter != top.end(); ++iter)
+    if (top.empty())
     {
-        cout << (*iter).first << "(" << (*iter).second << " hits)" << endl;
+        cerr << "Le fichié fournit est vide." << endl;
+        exit(1);
+    }
+    else
+    {
+        // Afficher les 10 premières entrées
+        int i = 1;
+        for (vector<pair<string, int>>::iterator iter = top.begin(); iter != top.end(); ++iter, ++i)
+        {
+            cout << i << ". " << (*iter).first << "(" << (*iter).second << " hits)" << endl;
+        }
     }
 
 } // Fin de Méthode
@@ -154,15 +163,18 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
         ReconstructURL(req.referer, req.URL); // si l'URL est locale, garde seulement la partie locale
         flag = true;
         // Vérifier si le statut de la requête est 200 (OK)
-        if (req.status != 200)
+        if (req.status >= 400)
         {
             flag = false;
         }
         // Vérifier si la requête doit être de type HTML uniquement
-        if (flag == true && htmlOnly == 1 && req.URL.substr(req.URL.size() - 4, 4) != "html")
+        if (req.URL.size() > 3)
         {
-            flag = false;
-            /* cout << "HTML Only" << endl; */
+            if (flag == true && htmlOnly == 1 && req.URL.substr(req.URL.size() - 4, 4) != "html")
+            {
+                flag = false;
+                /* cout << "HTML Only" << endl; */
+            }
         }
         // Vérifier si la requête est dans la plage horaire spécifiée
 
@@ -243,18 +255,24 @@ void DataManager::ReconstructURL(string &referent, string &cible)
 
     referent = referent.substr(slash_pos, referent.size() - 1);
     // Supprimer le dernier '/' s'il est présent à la fin de la sous-chaîne
-    int j = referent.size();
-    while (referent[j - 1] == '/')
+    if (referent.size() > 1)
     {
-        referent = referent.substr(0, j - 1);
-        j--;
+        int j = referent.size();
+        while (referent[j - 1] == '/')
+        {
+            referent = referent.substr(0, j - 1);
+            j--;
+        }
     }
     /* cout << result << endl; */
-    int t = cible.size();
-    while (cible[t - 1] == '/')
+    if (cible.size() > 1)
     {
-        cible = cible.substr(0, t - 1);
-        j--;
+        int t = cible.size();
+        while (cible[t - 1] == '/')
+        {
+            cible = cible.substr(0, t - 1);
+            t--;
+        }
     }
 } //----- Fin de Méthode
 
