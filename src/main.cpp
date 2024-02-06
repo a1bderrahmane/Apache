@@ -37,6 +37,23 @@ int main(int argc, char *argv[])
        cout << "Referer: " << requete.referer << endl;
        cout << "User_agent: " << requete.user_agent << endl;
     */
+    if (argc == 2)
+    {
+        if (string(argv[1]) == "-h" || string(argv[1]) == "--help")
+        {
+            string line;
+            ifstream help("../src/help.txt");
+            if (help.is_open())
+            {
+                while (getline(help, line))
+                {
+                    cout << line << '\n';
+                }
+                help.close();
+            }
+            exit(0);
+        }
+    }
     int time = -1;
     int htmlOnly = 0;
     string graph;
@@ -53,6 +70,7 @@ int main(int argc, char *argv[])
             else
             {
                 cerr << "Veuillez entrer une heure entre 0 et 24." << endl;
+                cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
                 exit(1);
             }
         }
@@ -63,20 +81,34 @@ int main(int argc, char *argv[])
         }
         else if (string(argv[i]) == "-g")
         {
-            if (string(argv[i + 1]).size() > 3)
+            if (string(argv[i + 1]).size() > 3 && string(argv[i + 1]).substr(string(argv[i + 1]).size() - 4, 4) == ".dot")
             {
-                if (string(argv[i + 1]).substr(string(argv[i + 1]).size() - 4, 4) == ".dot")
-                {
-                    graph = string(argv[i + 1]);
-                    /* cout << "graph : " << graph << endl; */
-                }
+                graph = string(argv[i + 1]);
+                /* cout << "graph : " << graph << endl; */
+            }
+            else
+            {
+                cerr << "Format du fichier .dot incorrect." << endl;
+                cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
+                exit(1);
             }
         }
     }
     string path = argv[argc - 1];
-    if (path.substr(path.size() - 4, 4) != ".log" && path.substr(path.size() - 4, 4) != ".txt")
+
+    try
+    {
+        if (path.substr(path.size() - 4, 4) != ".log" && path.substr(path.size() - 4, 4) != ".txt")
+        {
+            cerr << "Format du fichier invalide, veuillez entrer un fichier .log ou .txt." << endl;
+            cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
+            exit(1);
+        }
+    }
+    catch (const std::exception &e)
     {
         cerr << "Format du fichier invalide, veuillez entrer un fichier .log ou .txt." << endl;
+        cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
         exit(1);
     }
     /* cout << "path : " << path << endl; */

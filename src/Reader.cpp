@@ -77,7 +77,8 @@ Reader::Reader(const string &path)
     /* cout << "reader path : " << this->path << endl; */
     if (!logfile.is_open())
     {
-        cerr << "Erreur d'ouverture de <" << path << "> dans Reader. Vérifiez que le chemin d'accès est correct et que le fichié existe bien." << endl;
+        cerr << "Erreur d'ouverture de <" << path << "> dans Reader. Vérifiez que le chemin d'accès est correct et que le fichier existe bien." << endl;
+        cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
         exit(1);
     }
 } //----- Fin de Reader

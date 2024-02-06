@@ -17,8 +17,6 @@
 using namespace std;
 #include <iostream>
 
-
-
 //------------------------------------------------------ Include personnel
 #include "Graph.h"
 
@@ -29,7 +27,7 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 void Graph::MakeGraph(DataManager &SomeData)
 // Algorithme :
-//On utilise la méthode amie de la classe DataManager MakeDotText pour faire l'affichage dans le fichier.dot
+// On utilise la méthode amie de la classe DataManager MakeDotText pour faire l'affichage dans le fichier.dot
 {
     // Redirection du stream buffer associé à l’objet cout sur le stream buffer associé à OutputFile
     // en conservant l’adresse de l’ancien stream buffer de cout
@@ -48,13 +46,12 @@ Graph::Graph(const Graph &unGraph)
 
     if (!outputFile.is_open())
     {
-        cerr << "Erreur d'ouverture de <" << unGraph.name <<">"<< endl;
+        cerr << "Erreur d'ouverture de <" << unGraph.name << ">" << endl;
     }
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Graph>" << endl;
 #endif
 } //----- Fin de Graph (constructeur de copie)
-
 
 Graph::Graph(string name)
 {
@@ -63,7 +60,9 @@ Graph::Graph(string name)
 
     if (!outputFile.is_open())
     {
-        cerr << "Erreur d'ouverture de <" << name <<">"<< endl;
+        cerr << "Erreur d'ouverture de <" << name << ">" << endl;
+        cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
+        exit(1);
     }
 
 #ifdef MAP

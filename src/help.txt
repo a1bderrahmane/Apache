@@ -1,0 +1,5 @@
+usage: ./analog [options] required_input.log
+    options:
+        -e      Exclue les fichiers de type css, javascript ou images (png, jpg, gif...)
+        -t [heure]      Ne prend en compte que les requêtes entre [heure, heure + 1]
+        -g [required_input.dot]     Créer un fichier .dot avec le graphe représentant les requêtes

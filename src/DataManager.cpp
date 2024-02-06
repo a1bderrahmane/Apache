@@ -71,7 +71,8 @@ void DataManager::top10()
     }
     if (top.empty())
     {
-        cerr << "Le fichié fournit est vide." << endl;
+        cerr << "Le fichier fourni est vide." << endl;
+        cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
         exit(1);
     }
     else
@@ -249,7 +250,7 @@ void DataManager::ReconstructURL(string &referent, string &cible)
     // Variables pour suivre la présence des caractères '/' et '.'
     bool slash = false;
     bool point = false;
-    // Position du dernier caractère '/'
+    // Position du caractère '/' après lequel apparait l'url relatif
     size_t slash_pos = 0;
     int i;
     for (i = referent.size(); i > 0; --i)

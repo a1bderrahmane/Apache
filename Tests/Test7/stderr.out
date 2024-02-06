@@ -1,1 +1,2 @@
-Erreur d'ouverture de <anonyme.log> dans Reader. Vérifiez que le chemin d'accès est correct et que le fichié existe bien.
+Erreur d'ouverture de <anonyme.log> dans Reader. Vérifiez que le chemin d'accès est correct et que le fichier existe bien.
+Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes
