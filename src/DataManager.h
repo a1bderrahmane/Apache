@@ -30,10 +30,11 @@ typedef struct Node
     int Hit = 0;
     map<string, int> Dico;
 } Node;
+
 //------------------------------------------------------------------------
 // Rôle de la classe <DataManager>
-//
-//
+// La classe DataManager permet de récupérer et traiter les données du Reader en les normalisant et en
+// les stockant.
 //------------------------------------------------------------------------
 
 class DataManager
@@ -42,6 +43,7 @@ class DataManager
 
 public:
     friend ostream &operator<<(ostream &out, const DataManager &dm);
+    // Permet de pouvoir afficher le contenu de notre data manager durant la phase de développement
 
     friend void MakeDotText(DataManager &SomeData);
     // Mode d'emploi :
@@ -71,10 +73,6 @@ public:
     // Pour prendre en compte les requêtes en temps entre t et t+1 , prend en compte les requetes entre T:00 et T:59 inclu
 
     virtual ~DataManager();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
     //------------------------------------------------------------------ PRIVE
 
@@ -88,13 +86,14 @@ protected:
     // time     :si -1 , ne prend pas le temps en compte, sinon conserve uniquement les requêtes entre t et t+1
 
     void ReconstructURL(string &referent, string &cible);
+    // Paramètres:
+    // referent : URL du référent de la requête courante
+    // cible    : URL de la cible de la requête courante
     // Mode d'emploi :
-    // L'URL des cibles n'est pas complète, il faut la reconstruire
+    // Permet de normaliser les cibles et les référents en ne prennant en compte que le chemin relatif,
+    // sans les éventuelles options de recherche et caractère indésirables
 
     //----------------------------------------------------- Attributs protégés
-    bool t = false;
-    bool e = false;
-    bool g = false;
     map<string, Node> data;
 };
 

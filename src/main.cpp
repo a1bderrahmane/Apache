@@ -21,27 +21,13 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    /*
-        Request requete;
-       Reader rd = Reader("/tmp/log");
-
-       rd.GetRequest(requete);
-
-       cout << "le requete: " << endl;
-       cout << "IP: " << requete.ip << endl;
-       cout << "Sdate: " << requete.date << endl;
-       cout << "Heure: " << requete.heure << endl;
-       cout << "URL: " << requete.URL << endl;
-       cout << "Status: " << requete.status << endl;
-       cout << "Size: " << requete.size << endl;
-       cout << "Referer: " << requete.referer << endl;
-       cout << "User_agent: " << requete.user_agent << endl;
-    */
+    // Détecter si le paramètre est help
     if (argc == 2)
     {
         if (string(argv[1]) == "-h" || string(argv[1]) == "--help")
         {
             string line;
+            // Chemin du fichier help.txt contenant le texte d'aide à afficher dans le terminal
             ifstream help("../src/help.txt");
             if (help.is_open())
             {
@@ -54,9 +40,13 @@ int main(int argc, char *argv[])
             exit(0);
         }
     }
+
+    // Variables à passer au DataManager représentant les différentes options
     int time = -1;
     int htmlOnly = 0;
     string graph;
+
+    // Détection des différents paramètres
     int i;
     for (i = 1; i < argc - 1; i++)
     {
@@ -65,9 +55,8 @@ int main(int argc, char *argv[])
             if (stoi(argv[i + 1]) >= 0 && stoi(argv[i + 1]) < 24)
             {
                 time = stoi(argv[i + 1]);
-                /* cout << "Time : " << time << endl; */
             }
-            else
+            else // Erreur si l'heure n'est pas au bon format
             {
                 cerr << "Veuillez entrer une heure entre 0 et 24." << endl;
                 cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
@@ -77,16 +66,14 @@ int main(int argc, char *argv[])
         else if (string(argv[i]) == "-e")
         {
             htmlOnly = 1;
-            /*  cout << "htmlOnly : " << htmlOnly << endl; */
         }
         else if (string(argv[i]) == "-g")
         {
             if (string(argv[i + 1]).size() > 3 && string(argv[i + 1]).substr(string(argv[i + 1]).size() - 4, 4) == ".dot")
             {
                 graph = string(argv[i + 1]);
-                /* cout << "graph : " << graph << endl; */
             }
-            else
+            else // Erreur si le chemin du fichier .dot n'est pas au bon format
             {
                 cerr << "Format du fichier .dot incorrect." << endl;
                 cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
@@ -94,8 +81,9 @@ int main(int argc, char *argv[])
             }
         }
     }
-    string path = argv[argc - 1];
 
+    // Le chemin du fichier de log à traiter se trouve forcément à la fin de la commande
+    string path = argv[argc - 1];
     try
     {
         if (path.substr(path.size() - 4, 4) != ".log" && path.substr(path.size() - 4, 4) != ".txt")
@@ -105,36 +93,20 @@ int main(int argc, char *argv[])
             exit(1);
         }
     }
-    catch (const std::exception &e)
+    catch (const std::exception &e) // Erreur si on ne peut pas faire substr parce que path est trop petit
     {
         cerr << "Format du fichier invalide, veuillez entrer un fichier .log ou .txt." << endl;
         cerr << "Entrez './analog -h' ou './analog --help' pour obtenir la liste des commandes" << endl;
         exit(1);
     }
-    /* cout << "path : " << path << endl; */
+
+    // On appelle le datamanager
     DataManager dm(path, time, graph, htmlOnly);
+
+    // On appelle la classe graph pour créer le .dot
     if (graph.empty() == false)
     {
         Graph(graph).MakeGraph(dm);
     }
-    /*  cout << dm; */
-    /* string a = "a";
-    string b = "b";
-    string c = "c";
-    string d = "d";
-    Node n(a, b);
-    n.MAJ(c);
-    n.MAJ(c);
-    cout << n << endl;
-
-    for (int i = 0; i < argc; i++)
-    {
-        string str(argv[i]);
-        if (str == "-g")
-        {
-        }
-    }
-    DataManager d("/tmp/analog.log");
-    */
     return 0;
 }

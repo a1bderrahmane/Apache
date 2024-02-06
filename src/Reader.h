@@ -37,8 +37,8 @@ typedef struct Request
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Reader>
-//
-//
+// La classe Reader permet d'ouvrir le fichier de log à traiter et de récupérer les lignes consécutives
+// dans un type Request.
 //------------------------------------------------------------------------
 
 class Reader
@@ -49,25 +49,23 @@ public:
     //----------------------------------------------------- Méthodes publiques
     int GetRequest(Request &req);
     // Mode d'emploi :
-    //req:Objet de Request passé en référence
+    // req:Objet de Request passé en référence
 
     // Contrat :
-    //La ligne lu par GetRequest doit être bien formulée et respect la syntaxe conventionelle
+    // La ligne lu par GetRequest doit être bien formulée et respect la syntaxe conventionelle
 
     //-------------------------------------------- Constructeurs - destructeur
     Reader(const Reader &unReader);
-  
+
     Reader(const string &path);
     // Mode d'emploi :
-    //path: référence de l'adresse de <analog.log>
+    // path: référence de l'adresse de <analog.log>
     // La méthode essaie d'ouvrir le fichier à l'adresse donnée
     // S'il n'arrrive pas , la méthode renvoie un message d'erreur
-    
 
     virtual ~Reader();
     // Mode d'emploi :
-    //Ferme le fichier ouvert auparavant
-
+    // Ferme le fichier ouvert auparavant
 
     //------------------------------------------------------------------ PRIVE
 

@@ -26,8 +26,8 @@
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Graph>
-//
-//
+// la classe Graph permet d'ouvrir le fichier .dot à remplir et de le remplir en utilisant
+// la fonction ordinaire MakeDot
 //------------------------------------------------------------------------
 
 class Graph
@@ -37,22 +37,20 @@ public:
     //----------------------------------------------------- Méthodes publiques
     void MakeGraph(DataManager &SomeData);
     // Mode d'emploi :
-    //Somedata: référence d'un objet DataManager
-    // La méthode écrit dans le fichier.dot 
+    // Somedata: référence d'un objet DataManager
+    // La méthode écrit dans le fichier.dot
 
     //-------------------------------------------- Constructeurs - destructeur
     Graph(const Graph &unGraph);
     // Mode d'emploi (constructeur de copie) :
-    //Ouvre le fichier de même nom que celui de unGraph
-
+    // Ouvre le fichier de même nom que celui de unGraph
 
     Graph(string name);
     // Mode d'emploi :
-    //Ouvre le fichier de nom name, s'il n'existe pas déjà , elle le crée
-
+    // Ouvre le fichier de nom name, s'il n'existe pas déjà , elle le crée
 
     virtual ~Graph();
-    //Destructeur de la classe
+    // Destructeur de la classe
 
     //------------------------------------------------------------------ PRIVE
 

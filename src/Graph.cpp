@@ -71,7 +71,6 @@ Graph::Graph(string name)
 } //----- Fin de Graph
 
 Graph::~Graph()
-// Algorithme :
 {
     outputFile.close();
 #ifdef MAP

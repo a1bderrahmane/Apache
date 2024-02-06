@@ -33,8 +33,11 @@ int Reader::GetRequest(Request &requete)
 // Elle lit chaque ligne du fichier journal, analyse et extrait les informations de la requête, puis les stocke dans l'objet Request.
 
 {
+    // Récupération d'une ligne
     string line;
     getline(logfile, line);
+
+    // Lecture de la ligne dans les différents attributs de la requête
     if (logfile)
     {
         istringstream sflux(line);
@@ -74,7 +77,8 @@ Reader::Reader(const string &path)
 
     this->path = path;
     logfile.open(this->path);
-    /* cout << "reader path : " << this->path << endl; */
+
+    // Erreur si mauvaise ouverture du fichier de log
     if (!logfile.is_open())
     {
         cerr << "Erreur d'ouverture de <" << path << "> dans Reader. Vérifiez que le chemin d'accès est correct et que le fichier existe bien." << endl;

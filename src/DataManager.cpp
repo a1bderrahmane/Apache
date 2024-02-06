@@ -69,6 +69,8 @@ void DataManager::top10()
             maxi->second.Hit = -1;
         }
     }
+
+    // Vérifier si le fichier fournit est vide (classement vide)
     if (top.empty())
     {
         cerr << "Le fichier fourni est vide." << endl;
@@ -91,6 +93,8 @@ void DataManager::top10()
 ostream &operator<<(ostream &out, const DataManager &dm)
 {
     cout << "data : " << endl;
+
+    // Itération à travers le datamanager et les noeuds pour les afficher
     for (map<string, Node>::const_iterator it = dm.data.cbegin(); it != dm.data.cend(); ++it)
     {
         cout << "Noeud : " << it->first << endl
@@ -112,8 +116,6 @@ ostream &operator<<(ostream &out, const DataManager &dm)
 } //----- Fin de Méthode
 
 DataManager &DataManager::operator=(const DataManager &unDataManager)
-// Algorithme :
-//
 {
     data = unDataManager.data;
     return *this;
@@ -121,8 +123,6 @@ DataManager &DataManager::operator=(const DataManager &unDataManager)
 
 //-------------------------------------------- Constructeurs - destructeur
 DataManager::DataManager(const DataManager &unDataManager)
-// Algorithme :
-//
 {
     data = unDataManager.data;
 #ifdef MAP
@@ -132,7 +132,7 @@ DataManager::DataManager(const DataManager &unDataManager)
 
 DataManager::DataManager(const string &path, int time, string graph, int htmlOnly)
 // Algorithme :
-// Utilise la méthode GetData pour créer un objet de DataManager
+// Utilise la méthode GetData pour récupérer les données et la méthode top10() pour réaliser et afficher le top10
 {
 #ifdef MAP
     cout << "Appel au constructeur de <DataManager>" << endl;
@@ -159,16 +159,18 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
 {
     Request req;
     bool flag;
-    while (!r.GetRequest(req))
+    while (!r.GetRequest(req)) // Tant qu'on est pas à la fin du fichié
     {
         ReconstructURL(req.referer, req.URL); // si l'URL est locale, garde seulement la partie locale
-        flag = true;
+        flag = true;                          // Drapeau permettant de spécifier si la requête courante doit être prise en compte (true) ou non (false)
+
         // Vérifier si le statut de la requête est 200 (OK)
         if (req.status >= 400)
         {
             flag = false;
         }
-        // Vérifier si la requête doit être de type HTML uniquement
+
+        // Vérifier si la requête ne soit pas de type image, javascript ou css si on est en mode -e
         set<string> EXTENSIONS_INTERDITES = {
             ".js",
             ".jsx",
@@ -186,7 +188,6 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
             ".ico",
             ".webp",
             ".raw"};
-
         size_t pos_point = req.URL.find_last_of('.');
         if (pos_point != string::npos)
         {
@@ -196,17 +197,18 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
                 /* cout << "HTML Only" << endl; */
             }
         }
-        // Vérifier si la requête est dans la plage horaire spécifiée
 
+        // Vérifier si la requête est dans la plage horaire spécifiée si on est en mode -t
         if (flag == true && time != -1 && stoi(req.heure.substr(0, 2)) != time)
         {
             flag = false;
             /* cout << "Time : "
                  << time << endl; */
         }
+
+        // Mettre à jour les données en fonction de la requête
         if (flag == true)
         {
-            // Mettre à jour les données en fonction de la requête
             if (data.find(req.URL) != data.end())
             {
                 // La requête existe déjà dans les données, mettre à jour le compteur de hits
@@ -243,10 +245,14 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
 
 void DataManager::ReconstructURL(string &referent, string &cible)
 // Algorithme :
-// Cette méthode reconstruit une URL à partir d'une chaîne de référence en considérant les caractères '/' et '.'.
-// Elle recherche le dernier '/' et '.' dans la chaîne, puis reconstruit l'URL en prenant la sous-chaîne entre ces positions.
-
+// Cette méthode "reconstruit" un le referent pour ne garder que le chemin relatif.
+// Elle retrouve la position du '/' précedant le chemin relatif en partant du principe qu'en partant de la fin
+// de la chaine, si on croise un '/' puis en '.' dans cet ordre ci et sans autre '/' entre les deux, alors on
+// a atteint la position du '/' recherché.
+// Elle permet aussi de supprimer les '/' en trop à la fin des cibles et/ou référents.
+// Elle permet aussi de se débarrasser des options (suivant les caractères '?', ';' ou '#') dans les requêtes
 {
+    // Supprimer les '/' en trop à la fin du référent
     if (referent.size() > 0)
     {
         int j = referent.size();
@@ -257,6 +263,7 @@ void DataManager::ReconstructURL(string &referent, string &cible)
         }
     }
 
+    // Retrouver le chemin relatif pour le référent
     // Variables pour suivre la présence des caractères '/' et '.'
     bool slash = false;
     bool point = false;
@@ -281,11 +288,10 @@ void DataManager::ReconstructURL(string &referent, string &cible)
             break;
         }
     }
-    // Reconstruction de l'URL à partir de la sous-chaîne entre le dernier '/' et '.'
-
+    // Reconstruction de l'URL
     referent = referent.substr(slash_pos, referent.size());
-    // Supprimer le dernier '/' s'il est présent à la fin de la sous-chaîne
 
+    // Supprimer les options du référent
     size_t opt_pos = min(referent.find('?'), min(referent.find(';'), referent.find('#')));
     if (opt_pos != string::npos)
     {
@@ -293,12 +299,7 @@ void DataManager::ReconstructURL(string &referent, string &cible)
         referent.resize(opt_pos);
     }
 
-    if (referent == "-")
-    {
-        referent.clear();
-    }
-
-    /* cout << result << endl; */
+    // Supprimer les '/' en trop à la fin de la cible
     if (cible.size() > 0)
     {
         int t = cible.size();
@@ -309,10 +310,11 @@ void DataManager::ReconstructURL(string &referent, string &cible)
         }
     }
 
+    // Supprimer les options de la cible
     size_t opt_pos_c = min(cible.find('?'), min(cible.find(';'), cible.find('#')));
     if (opt_pos_c != string::npos)
     {
-        cible = cible.substr(0, opt_pos_c);
+        cible.resize(opt_pos_c);
     }
 } //----- Fin de Méthode
 
