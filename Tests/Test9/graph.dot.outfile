@@ -1,8 +1,9 @@
-digraph {fontname="Helvetica,Arial,sans-serif";
+digraph {
+fontname="Helvetica,Arial,sans-serif";
 node [fontname="Helvetica,Arial,sans-serif"];
 edge [fontname="Helvetica,Arial,sans-serif"];
 overlap = scale;layout=sfdp;
-graph [ranksep=3, root=" node0 ", overlap=prism];
+graph [ranksep=3, overlap=prism];
 node0[label="/temps/4IF16.html"]
 node0 -> node0[label="1"]
 node1[label="/temps/4IF18.html"]

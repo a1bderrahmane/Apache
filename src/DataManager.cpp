@@ -247,6 +247,16 @@ void DataManager::ReconstructURL(string &referent, string &cible)
 // Elle recherche le dernier '/' et '.' dans la chaîne, puis reconstruit l'URL en prenant la sous-chaîne entre ces positions.
 
 {
+    if (referent.size() > 0)
+    {
+        int j = referent.size();
+        while (referent[j - 1] == '/')
+        {
+            referent = referent.substr(0, j - 1);
+            j--;
+        }
+    }
+
     // Variables pour suivre la présence des caractères '/' et '.'
     bool slash = false;
     bool point = false;
@@ -273,19 +283,23 @@ void DataManager::ReconstructURL(string &referent, string &cible)
     }
     // Reconstruction de l'URL à partir de la sous-chaîne entre le dernier '/' et '.'
 
-    referent = referent.substr(slash_pos, referent.size() - 1);
+    referent = referent.substr(slash_pos, referent.size());
     // Supprimer le dernier '/' s'il est présent à la fin de la sous-chaîne
-    if (referent.size() > 1)
+
+    size_t opt_pos = min(referent.find('?'), min(referent.find(';'), referent.find('#')));
+    if (opt_pos != string::npos)
     {
-        int j = referent.size();
-        while (referent[j - 1] == '/')
-        {
-            referent = referent.substr(0, j - 1);
-            j--;
-        }
+        /*         cout << referent[opt_pos] << endl; */
+        referent.resize(opt_pos);
     }
+
+    if (referent == "-")
+    {
+        referent.clear();
+    }
+
     /* cout << result << endl; */
-    if (cible.size() > 1)
+    if (cible.size() > 0)
     {
         int t = cible.size();
         while (cible[t - 1] == '/')
@@ -293,6 +307,12 @@ void DataManager::ReconstructURL(string &referent, string &cible)
             cible = cible.substr(0, t - 1);
             t--;
         }
+    }
+
+    size_t opt_pos_c = min(cible.find('?'), min(cible.find(';'), cible.find('#')));
+    if (opt_pos_c != string::npos)
+    {
+        cible = cible.substr(0, opt_pos_c);
     }
 } //----- Fin de Méthode
 
@@ -304,14 +324,14 @@ void MakeDotText(DataManager &SomeData)
 {
     // Vecteur pour suivre les nœuds déjà traités
     vector<string> tab_node;
-    cout << "digraph {"
+    cout << "digraph {" << endl
          << "fontname=\"Helvetica,Arial,sans-serif\";" << endl
          << "node [fontname=\"Helvetica,Arial,sans-serif\"];" << endl
          << "edge [fontname=\"Helvetica,Arial,sans-serif\"];" << endl
          << "overlap = scale;"
          << "layout=sfdp;" << endl
-         << "graph [ranksep=3, root=\" node0 \", overlap=prism];" << endl;
-    // Parcours de la map principale
+         << "graph [ranksep=3, overlap=prism];" << endl;
+
     for (map<string, Node>::iterator t = SomeData.data.begin(); t != SomeData.data.end(); t++)
     {
         // Vérifier si le nœud a déjà été traité
