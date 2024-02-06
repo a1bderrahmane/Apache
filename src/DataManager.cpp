@@ -245,7 +245,7 @@ int DataManager::GetData(Reader &r, int time, string graph, int htmlOnly)
 
 void DataManager::ReconstructURL(string &referent, string &cible)
 // Algorithme :
-// Cette méthode "reconstruit" un le referent pour ne garder que le chemin relatif.
+// Cette méthode "reconstruit" le referent pour ne garder que le chemin relatif.
 // Elle retrouve la position du '/' précedant le chemin relatif en partant du principe qu'en partant de la fin
 // de la chaine, si on croise un '/' puis en '.' dans cet ordre ci et sans autre '/' entre les deux, alors on
 // a atteint la position du '/' recherché.
